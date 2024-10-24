@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		92498E602CCA5180008DFF44 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92498E5F2CCA5180008DFF44 /* Team.swift */; };
 		925C7B012CCA480200A0B426 /* RawEngSampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925C7B002CCA480200A0B426 /* RawEngSampleApp.swift */; };
 		925C7B032CCA480200A0B426 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925C7B022CCA480200A0B426 /* ContentView.swift */; };
 		925C7B052CCA480400A0B426 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 925C7B042CCA480400A0B426 /* Assets.xcassets */; };
@@ -14,6 +15,14 @@
 		925C7B122CCA480500A0B426 /* RawEngSampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925C7B112CCA480500A0B426 /* RawEngSampleTests.swift */; };
 		925C7B1C2CCA480500A0B426 /* RawEngSampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925C7B1B2CCA480500A0B426 /* RawEngSampleUITests.swift */; };
 		925C7B1E2CCA480500A0B426 /* RawEngSampleUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925C7B1D2CCA480500A0B426 /* RawEngSampleUITestsLaunchTests.swift */; };
+		925C7B302CCA499100A0B426 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925C7B2B2CCA499100A0B426 /* Data.swift */; };
+		925C7B312CCA499100A0B426 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925C7B2C2CCA499100A0B426 /* Schedule.swift */; };
+		925C7B322CCA499100A0B426 /* ScheduleResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925C7B2D2CCA499100A0B426 /* ScheduleResponse.swift */; };
+		925C7B332CCA499100A0B426 /* V.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925C7B2E2CCA499100A0B426 /* V.swift */; };
+		925C7B342CCA499100A0B426 /* H.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925C7B2F2CCA499100A0B426 /* H.swift */; };
+		925C7B392CCA4A3A00A0B426 /* teams.json in Resources */ = {isa = PBXBuildFile; fileRef = 925C7B362CCA4A3A00A0B426 /* teams.json */; };
+		925C7B3A2CCA4A3A00A0B426 /* Schedule.json in Resources */ = {isa = PBXBuildFile; fileRef = 925C7B372CCA4A3A00A0B426 /* Schedule.json */; };
+		925C7B3B2CCA4A3A00A0B426 /* Game Card Data.json in Resources */ = {isa = PBXBuildFile; fileRef = 925C7B382CCA4A3A00A0B426 /* Game Card Data.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		92498E5F2CCA5180008DFF44 /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
 		925C7AFD2CCA480200A0B426 /* RawEngSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RawEngSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		925C7B002CCA480200A0B426 /* RawEngSampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawEngSampleApp.swift; sourceTree = "<group>"; };
 		925C7B022CCA480200A0B426 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -44,6 +54,14 @@
 		925C7B172CCA480500A0B426 /* RawEngSampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RawEngSampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		925C7B1B2CCA480500A0B426 /* RawEngSampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawEngSampleUITests.swift; sourceTree = "<group>"; };
 		925C7B1D2CCA480500A0B426 /* RawEngSampleUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawEngSampleUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		925C7B2B2CCA499100A0B426 /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		925C7B2C2CCA499100A0B426 /* Schedule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
+		925C7B2D2CCA499100A0B426 /* ScheduleResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleResponse.swift; sourceTree = "<group>"; };
+		925C7B2E2CCA499100A0B426 /* V.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = V.swift; sourceTree = "<group>"; };
+		925C7B2F2CCA499100A0B426 /* H.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = H.swift; sourceTree = "<group>"; };
+		925C7B362CCA4A3A00A0B426 /* teams.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = teams.json; sourceTree = "<group>"; };
+		925C7B372CCA4A3A00A0B426 /* Schedule.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Schedule.json; sourceTree = "<group>"; };
+		925C7B382CCA4A3A00A0B426 /* Game Card Data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Game Card Data.json"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +112,8 @@
 		925C7AFF2CCA480200A0B426 /* RawEngSample */ = {
 			isa = PBXGroup;
 			children = (
+				925C7B352CCA49FC00A0B426 /* Json_payloads */,
+				925C7B2A2CCA489600A0B426 /* Model */,
 				925C7B002CCA480200A0B426 /* RawEngSampleApp.swift */,
 				925C7B022CCA480200A0B426 /* ContentView.swift */,
 				925C7B042CCA480400A0B426 /* Assets.xcassets */,
@@ -125,6 +145,29 @@
 				925C7B1D2CCA480500A0B426 /* RawEngSampleUITestsLaunchTests.swift */,
 			);
 			path = RawEngSampleUITests;
+			sourceTree = "<group>";
+		};
+		925C7B2A2CCA489600A0B426 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				925C7B2B2CCA499100A0B426 /* Data.swift */,
+				925C7B2F2CCA499100A0B426 /* H.swift */,
+				925C7B2D2CCA499100A0B426 /* ScheduleResponse.swift */,
+				925C7B2C2CCA499100A0B426 /* Schedule.swift */,
+				925C7B2E2CCA499100A0B426 /* V.swift */,
+				92498E5F2CCA5180008DFF44 /* Team.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		925C7B352CCA49FC00A0B426 /* Json_payloads */ = {
+			isa = PBXGroup;
+			children = (
+				925C7B382CCA4A3A00A0B426 /* Game Card Data.json */,
+				925C7B372CCA4A3A00A0B426 /* Schedule.json */,
+				925C7B362CCA4A3A00A0B426 /* teams.json */,
+			);
+			path = Json_payloads;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -231,8 +274,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				925C7B392CCA4A3A00A0B426 /* teams.json in Resources */,
 				925C7B082CCA480400A0B426 /* Preview Assets.xcassets in Resources */,
+				925C7B3A2CCA4A3A00A0B426 /* Schedule.json in Resources */,
 				925C7B052CCA480400A0B426 /* Assets.xcassets in Resources */,
+				925C7B3B2CCA4A3A00A0B426 /* Game Card Data.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,8 +303,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				925C7B332CCA499100A0B426 /* V.swift in Sources */,
 				925C7B032CCA480200A0B426 /* ContentView.swift in Sources */,
+				925C7B302CCA499100A0B426 /* Data.swift in Sources */,
+				925C7B312CCA499100A0B426 /* Schedule.swift in Sources */,
+				92498E602CCA5180008DFF44 /* Team.swift in Sources */,
+				925C7B322CCA499100A0B426 /* ScheduleResponse.swift in Sources */,
 				925C7B012CCA480200A0B426 /* RawEngSampleApp.swift in Sources */,
+				925C7B342CCA499100A0B426 /* H.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
