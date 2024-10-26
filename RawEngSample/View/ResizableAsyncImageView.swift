@@ -8,11 +8,25 @@
 import SwiftUI
 
 struct ResizableAsyncImageView: View {
+    private let tid: String
+    private let size: CGFloat
+    
+    init(_ tid: String, size: CGFloat = 50) {
+        self.tid = tid
+        self.size = size
+    }
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        let urlString = TeamService.shared.urlForTeamId(tid) ?? ""
+        AsyncImage(url: URL(string: urlString)) { image in
+            image
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+        } placeholder: {
+            ProgressView()
+                .progressViewStyle(.circular)
+        }
+        .frame(width: size, height: size)
     }
 }
 
-#Preview {
-    ResizableAsyncImageView()
-}

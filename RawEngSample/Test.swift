@@ -6,12 +6,35 @@
 //
 
 import SwiftUI
-
-struct Test: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+struct PreferenceKey: SwiftUI.PreferenceKey {
+    static var defaultValue: CGFloat { .zero }
+    
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        // No-op
     }
 }
+
+struct Test: View {
+    let array: [Int] = {
+        var temp: [Int] = []
+        for i in 0...50 {
+            temp.append(i)
+        }
+        return temp
+    }()
+    @State var index = 0
+    var body: some View {
+        VStack {
+            Color.red
+            
+        }
+        //.ignoresSafeArea()
+       
+    }
+    
+}
+
+
 
 #Preview {
     Test()

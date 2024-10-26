@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct Schedule : Decodable, Hashable {    
-	let uid : String?
+struct Schedule : Decodable, Hashable {
+	let uid : String
 	let year : Int?
 	let league_id : String?
 	let season_id : String?
@@ -16,7 +16,7 @@ struct Schedule : Decodable, Hashable {
 	let gcode : String?
 	let seri : String?
 	let is_game_necessary : String?
-	let gametime : String?
+	let gametime : String
 	let cl : String?
 	let arena_name : String?
 	let arena_city : String?
@@ -32,7 +32,11 @@ struct Schedule : Decodable, Hashable {
 	let game_subtype : String?
 	let h : H
 	let v : V
-
+    
+    let readableGameDate: String
+    let readableGameTime: String
+    let readableGameMonYear: String
+    
 	enum CodingKeys: String, CodingKey {
 
 		case uid = "uid"
@@ -63,7 +67,7 @@ struct Schedule : Decodable, Hashable {
 
 	init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
-		uid = try values.decodeIfPresent(String.self, forKey: .uid)
+		uid = try values.decode(String.self, forKey: .uid)
 		year = try values.decodeIfPresent(Int.self, forKey: .year)
 		league_id = try values.decodeIfPresent(String.self, forKey: .league_id)
 		season_id = try values.decodeIfPresent(String.self, forKey: .season_id)
@@ -71,7 +75,7 @@ struct Schedule : Decodable, Hashable {
 		gcode = try values.decodeIfPresent(String.self, forKey: .gcode)
 		seri = try values.decodeIfPresent(String.self, forKey: .seri)
 		is_game_necessary = try values.decodeIfPresent(String.self, forKey: .is_game_necessary)
-		gametime = try values.decodeIfPresent(String.self, forKey: .gametime)
+		gametime = try values.decode(String.self, forKey: .gametime)
 		cl = try values.decodeIfPresent(String.self, forKey: .cl)
 		arena_name = try values.decodeIfPresent(String.self, forKey: .arena_name)
 		arena_city = try values.decodeIfPresent(String.self, forKey: .arena_city)
@@ -87,69 +91,10 @@ struct Schedule : Decodable, Hashable {
 		game_subtype = try values.decodeIfPresent(String.self, forKey: .game_subtype)
 		h = try values.decode(H.self, forKey: .h)
 		v = try values.decode(V.self, forKey: .v)
+        
+        readableGameDate = gametime.toReadableDateFormatFromISO8601("EEE MMM dd") ?? ""
+        readableGameTime = gametime.toReadableDateFormatFromISO8601("h:mm a") ?? ""
+        readableGameMonYear = gametime.toReadableDateFormatFromISO8601("MMM yyyy") ?? ""
 	}
 }
 
-struct H : Decodable, Hashable {
-    let tid : String
-    let re : String?
-    let ta : String?
-    let tn : String?
-    let tc : String?
-    let s : String?
-    let ist_group : String?
-    
-    enum CodingKeys: String, CodingKey {
-        
-        case tid = "tid"
-        case re = "re"
-        case ta = "ta"
-        case tn = "tn"
-        case tc = "tc"
-        case s = "s"
-        case ist_group = "ist_group"
-    }
-    
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        tid = try values.decode(String.self, forKey: .tid)
-        re = try values.decodeIfPresent(String.self, forKey: .re)
-        ta = try values.decodeIfPresent(String.self, forKey: .ta)
-        tn = try values.decodeIfPresent(String.self, forKey: .tn)
-        tc = try values.decodeIfPresent(String.self, forKey: .tc)
-        s = try values.decodeIfPresent(String.self, forKey: .s)
-        ist_group = try values.decodeIfPresent(String.self, forKey: .ist_group)
-    }
-}
-
-struct V : Decodable, Hashable {
-    let tid : String
-    let re : String?
-    let ta : String?
-    let tn : String?
-    let tc : String?
-    let s : String?
-    let ist_group : String?
-    
-    enum CodingKeys: String, CodingKey {
-        
-        case tid = "tid"
-        case re = "re"
-        case ta = "ta"
-        case tn = "tn"
-        case tc = "tc"
-        case s = "s"
-        case ist_group = "ist_group"
-    }
-    
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        tid = try values.decode(String.self, forKey: .tid)
-        re = try values.decodeIfPresent(String.self, forKey: .re)
-        ta = try values.decodeIfPresent(String.self, forKey: .ta)
-        tn = try values.decodeIfPresent(String.self, forKey: .tn)
-        tc = try values.decodeIfPresent(String.self, forKey: .tc)
-        s = try values.decodeIfPresent(String.self, forKey: .s)
-        ist_group = try values.decodeIfPresent(String.self, forKey: .ist_group)
-    }
-}

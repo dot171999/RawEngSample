@@ -7,15 +7,7 @@
 
 import Foundation
 
-struct TeamsResponse: Codable, Hashable {
-    let data: TeamsData
-}
-
-struct TeamsData: Codable, Hashable {
-    let teams: [Team]
-}
-
-struct Team: Codable, Hashable {
+struct Team: Decodable, Hashable {
     let uid: String
     let year: Int
     let leagueID: String

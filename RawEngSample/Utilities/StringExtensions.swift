@@ -9,7 +9,7 @@ import Foundation
 
 extension String {
     
-    func toReadableDateFromISO8601() -> String? {
+    func toReadableDateFormatFromISO8601(_ dateFormat: String) -> String? {
         let isoFormatter = ISO8601DateFormatter()
         isoFormatter.formatOptions.insert(.withFractionalSeconds)
         
@@ -18,24 +18,16 @@ extension String {
         }
         
         let outputFormatter = DateFormatter()
-        outputFormatter.dateFormat = "EEE MMM dd"
+        outputFormatter.dateFormat = dateFormat
         outputFormatter.timeZone = TimeZone.current
         
         return outputFormatter.string(from: date).uppercased()
     }
     
-    func toReadableTimeFromISO8601() -> String? {
+    func toDateFromISO8601() -> Date? {
         let isoFormatter = ISO8601DateFormatter()
         isoFormatter.formatOptions.insert(.withFractionalSeconds)
         
-        guard let date = isoFormatter.date(from: self) else {
-            return nil
-        }
-        
-        let outputFormatter = DateFormatter()
-        outputFormatter.dateFormat = "h:mm a"
-        outputFormatter.timeZone = TimeZone.current
-        
-        return outputFormatter.string(from: date).uppercased()
+        return isoFormatter.date(from: self)
     }
 }

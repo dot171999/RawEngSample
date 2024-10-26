@@ -5,6 +5,8 @@
 //  Created by Aryan Sharma on 24/10/24.
 //
 
+import Foundation
+
 struct ScheduleData : Decodable {
 	let schedules : [Schedule]?
 

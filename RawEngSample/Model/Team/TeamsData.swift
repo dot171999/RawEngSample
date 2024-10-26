@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+struct TeamsData: Decodable, Hashable {
+    let teams: [Team]
+}
