@@ -1,6 +1,11 @@
-import Foundation
+//
+//  ScheduleData.swift
+//  RawEngSample
+//
+//  Created by Aryan Sharma on 24/10/24.
+//
 
-struct GameData : Codable {
+struct ScheduleData : Decodable {
 	let schedules : [Schedule]?
 
 	enum CodingKeys: String, CodingKey {

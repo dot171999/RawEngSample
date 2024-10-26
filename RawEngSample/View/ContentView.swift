@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 let homeTeamTid = "1610612748"
 
 struct ContentView: View {
@@ -38,123 +37,156 @@ struct ContentView: View {
                 }
             }
             .padding(.horizontal)
-            .task {
+            .onAppear {
                 viewModel.getScheduleData()
                 viewModel.getTeamData()
             }
         }
     }
     
-    
-    
     @ViewBuilder
     func PastGameView(for schedule: Schedule,_ atHome: Bool) -> some View {
         
         ZStack {
-            Color.teal.opacity(0.2)
-            
+            Color(red: 44/255, green: 49/255, blue: 54/255)
             VStack {
                 HStack {
                     Text(atHome ? "HOME" : "AWAY")
-                    Text("| " + (schedule.gametime?.toFormattedDate() ?? "") + " |")
-                    Text(schedule.stt?.capitalized ?? "")
+                    Text("|  " + (schedule.gametime?.toFormattedDate() ?? "") + "  |")
+                    Text(schedule.stt?.uppercased() ?? "")
                 }
+                .font(.footnote)
                 HStack {
                     VStack {
-                        teamImage(atHome ? schedule.v.tid : homeTeamTid)
-                        Text("MIA")
+                        teamImage(schedule.v.tid)
+                        Text(schedule.v.ta)
+                            .fontWeight(.black)
+                            .italic()
                     }
                     VStack {
                         HStack {
-                            Text((atHome ? schedule.v.s : schedule.h.s) ?? "")
+                            Text(schedule.v.s ?? "")
+                                .font(.title2)
+                                .fontWeight(.semibold)
                             Text(atHome ? "VS" : "@")
-                            Text((atHome ? schedule.h.s : schedule.v.s) ?? "")
+                            Text(schedule.h.s ?? "")
+                                .font(.title2)
+                                .fontWeight(.semibold)
                         }
                     }
+                    .padding(.horizontal)
                     VStack {
-                        teamImage(atHome ? homeTeamTid : schedule.h.tid)
-                        Text("MIA")
+                        teamImage(schedule.h.tid)
+                        Text(schedule.h.ta)
+                            .fontWeight(.black)
+                            .italic()
                     }
                 }
             }
             .padding()
         }
-        .clipShape(.rect(cornerRadius: 10))
+        .clipShape(.rect(cornerRadius: 15))
     }
     
     @ViewBuilder
     func LiveGameView(for schedule: Schedule,_ atHome: Bool) -> some View {
         ZStack {
-            Color.teal.opacity(0.2)
+            Color(red: 44/255, green: 49/255, blue: 54/255)
             
             VStack {
                 HStack {
-                    Text(atHome ? "HOME" : "AWAY")
-                    Text("| " + (schedule.gametime?.toFormattedDate() ?? "") + " |")
-                    Text("Final")
+                    Text("3RD QTR")
+                    Text(" | ")
+                    Text("00:16.3")
                 }
+                .font(.footnote)
                 HStack {
                     VStack {
-                        teamImage(atHome ? schedule.v.tid : homeTeamTid)
+                        teamImage(atHome ? schedule.v.tid : homeTeamTid, size: 60)
                         Text("MIA")
+                            .fontWeight(.black)
+                            .italic()
                     }
                     VStack {
-                        Text("Live")
+                        Text("LIVE")
+                            .font(.footnote)
+                            .padding(.vertical, 5)
+                            .padding(.horizontal, 10)
+                            .background(.black.opacity(0.5))
+                            .clipShape(.rect(cornerRadius: 10))
+                        
                         HStack {
                             Text((atHome ? schedule.v.s : schedule.h.s) ?? "")
+                                .font(.title2)
+                                .fontWeight(.semibold)
                             Text(atHome ? "VS" : "@")
+                                .padding(.horizontal, 5)
                             Text((atHome ? schedule.h.s : schedule.v.s) ?? "")
+                                .font(.title2)
+                                .fontWeight(.semibold)
                         }
                     }
+                    .padding(.horizontal)
+                    
                     VStack {
-                        teamImage(atHome ? homeTeamTid : schedule.h.tid)
+                        teamImage(atHome ? homeTeamTid : schedule.h.tid , size: 60)
                         Text("MIA")
+                            .fontWeight(.black)
+                            .italic()
                     }
                 }
             }
             .padding()
         }
-        .clipShape(.rect(cornerRadius: 10))
+        .clipShape(.rect(cornerRadius: 15))
     }
     
     @ViewBuilder
     func FutureGameView(for schedule: Schedule,_ atHome: Bool) -> some View {
         ZStack {
-            Color.teal.opacity(0.2)
+            Color(red: 44/255, green: 49/255, blue: 54/255)
             
             VStack {
                 HStack {
                     Text(atHome ? "HOME" : "AWAY")
-                    Text("| " + (schedule.gametime?.toFormattedDate() ?? "") + " |")
-                    Text(schedule.stt?.capitalized ?? "")
-                        .font(.footnote)
+                    Text("|  " + (schedule.gametime?.toFormattedDate() ?? "") + "  |")
+                    
+                    Text(schedule.gametime?.toFormattedDate1() ?? "")
                 }
+                .font(.footnote)
                 HStack {
                     HStack {
                         teamImage(atHome ? schedule.v.tid : homeTeamTid)
                         Text("MIA")
+                            .font(.title2)
+                            .fontWeight(.black)
+                            .italic()
                     }
                     VStack {
                         HStack {
                             Text(atHome ? "VS" : "@")
                         }
                     }
+                    .padding(.horizontal)
                     HStack {
                         Text("MIA")
+                            .font(.title2)
+                            .fontWeight(.black)
+                            .italic()
                         teamImage(atHome ? homeTeamTid : schedule.h.tid)
                     }
                 }
             }
             .padding()
         }
-        .clipShape(.rect(cornerRadius: 10))
+        .clipShape(.rect(cornerRadius: 15))
     }
     
     @ViewBuilder
     func teamImage(_ tid: String, size: CGFloat = 50) -> some View {
         
-            
-        AsyncImage(url: URL(string: viewModel.urlForTeamId(tid) ?? "")) { image in
+        let urlString = viewModel.urlForTeamId(tid) ?? ""
+         AsyncImage(url: URL(string: urlString)) { image in
             image
                 .resizable()
                 .aspectRatio(contentMode: .fit)
@@ -165,87 +197,36 @@ struct ContentView: View {
     }
 }
 
-extension ContentView {
-    @Observable
-    class ViewModel {
-        var schedules: [Schedule] = []
-        var teams: [Team] = []
-        
-        func urlForTeamId(_ id: String) -> String? {
-            return teams.first { team in
-                team.tid == id
-            }?.logo
-        }
-        
-        func checkingIfPlayingAtHome(_ schedule: Schedule) -> Bool {
-            return (schedule.v.tid == homeTeamTid) ? false : true
-        }
-        
-        func getScheduleData() {
-            
-            guard let url = Bundle.main.url(forResource: "Schedule", withExtension: "json") else {
-                return
-            }
-            do {
-               
-                let data = try Data(contentsOf: url)
-                let decoder = JSONDecoder()
-                
-                let response = try decoder.decode(ScheduleResponse.self, from: data)
-                
-                self.schedules = response.data?.schedules ?? []
-                
-            } catch {
-               print(error)
-            }
-        }
-        
-        func getTeamData() {
-            
-            guard let url = Bundle.main.url(forResource: "teams", withExtension: "json") else {
-                return
-            }
-            
-            do {
-                
-                let data = try Data(contentsOf: url)
-                let decoder = JSONDecoder()
-                
-                let response = try decoder.decode(TeamData.self, from: data)
-                
-                self.teams = response.data.teams
-                
-            } catch {
-                print(error)
-            }
-        }
-    }
-}
-
-
 extension String {
+    
     func toFormattedDate() -> String? {
         let isoFormatter = ISO8601DateFormatter()
-        isoFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        isoFormatter.formatOptions.insert(.withFractionalSeconds)
        
         guard let date = isoFormatter.date(from: self) else {
-            return nil
-        }
-        
-        var calendar = Calendar.current
-        calendar.timeZone = TimeZone(abbreviation: "UTC")!
-        
-        let components = calendar.dateComponents([.year, .month], from: date)
-
-        guard let firstOfMonth = calendar.date(from: components) else {
             return nil
         }
 
         let outputFormatter = DateFormatter()
         outputFormatter.dateFormat = "EEE MMM dd"
-        outputFormatter.locale = Locale(identifier: "en_US_POSIX")
+        outputFormatter.timeZone = TimeZone.current
         
-        return outputFormatter.string(from: firstOfMonth).uppercased()
+        return outputFormatter.string(from: date).uppercased()
+    }
+    
+    func toFormattedDate1() -> String? {
+        let isoFormatter = ISO8601DateFormatter()
+        isoFormatter.formatOptions.insert(.withFractionalSeconds)
+        
+        guard let date = isoFormatter.date(from: self) else {
+            return nil
+        }
+        
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "h:mm a" // Format for "7:30 PM"
+        outputFormatter.timeZone = TimeZone.current
+        
+        return outputFormatter.string(from: date).uppercased()
     }
 }
 

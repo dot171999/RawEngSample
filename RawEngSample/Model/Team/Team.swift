@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TeamData: Codable, Hashable {
+struct TeamsResponse: Codable, Hashable {
     let data: TeamsData
 }
 
