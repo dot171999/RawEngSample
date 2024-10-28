@@ -7,6 +7,8 @@
 
 import Foundation
 
+let homeTeamTid = "1610612748"
+
 class TeamService {
     
     static let shared = TeamService()
@@ -40,5 +42,11 @@ class TeamService {
         return teams.first { team in
             team.tid == id
         }?.logo
+    }
+    
+    func myTeamName() -> String {
+        teams.first { team in
+            team.tid == homeTeamTid
+        }?.ta ?? "TEAM"
     }
 }

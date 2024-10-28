@@ -1,5 +1,5 @@
 //
-//  PastGameView.swift
+//  FutureGameScheduleView.swift
 //  RawEngSample
 //
 //  Created by Aryan Sharma on 25/10/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PastGameView: View {
+struct FutureGameScheduleView: View {
     private var schedule: Schedule
     private var atHome: Bool
     
@@ -23,37 +23,51 @@ struct PastGameView: View {
             VStack {
                 HStack {
                     Text(atHome ? "HOME" : "AWAY")
-                    Text("|  " + schedule.readableGameDate + "  |")
-                    Text(schedule.stt?.uppercased() ?? "")
+                    Text("|  " + (schedule.readableGameDate) + "  |")
+                    
+                    Text(schedule.readableGameTime)
                 }
                 .font(.footnote)
                 HStack {
-                    VStack {
-                        ResizableAsyncImageView(schedule.v.tid)
+                    HStack {
+                        ResizableAsyncImageView(atHome ? schedule.v.tid : homeTeamTid)
                         Text(schedule.v.ta)
+                            .font(.title2)
                             .fontWeight(.black)
                             .italic()
                     }
-        
                     VStack {
                         HStack {
-                            Text(schedule.v.s ?? "")
-                                .font(.title2)
-                                .fontWeight(.semibold)
                             Text(atHome ? "VS" : "@")
-                            Text(schedule.h.s ?? "")
-                                .font(.title2)
-                                .fontWeight(.semibold)
                         }
                     }
                     .padding(.horizontal)
-        
-                    VStack {
-                        ResizableAsyncImageView(schedule.h.tid)
+                    HStack {
                         Text(schedule.h.ta)
+                            .font(.title2)
                             .fontWeight(.black)
                             .italic()
+                        ResizableAsyncImageView(atHome ? homeTeamTid : schedule.h.tid)
                     }
+                }
+                
+                if let url = schedule.buy_ticket_url, url.isEmpty {
+                    Button {
+                        // Buy Ticket
+                    } label: {
+                        Text("BUY TICKETS ON")
+                            .font(.footnote)
+                            .fontWeight(.semibold)
+                        Text("ticketmaster")
+                            .font(.footnote)
+                            .italic()
+                            .fontWeight(.semibold)
+                    }
+                    .tint(.black)
+                    .padding(10)
+                    .frame(maxWidth: .infinity)
+                    .background(.white)
+                    .clipShape(.rect(cornerRadius: 20))
                 }
             }
             .padding()
@@ -63,10 +77,9 @@ struct PastGameView: View {
 }
 
 #Preview {
-    
     var schedules: [Schedule] = []
     let url = Bundle.main.url(forResource: "Schedule", withExtension: "json")
-      
+    
     let data = try! Data(contentsOf: url!)
     let decoder = JSONDecoder()
     
@@ -74,8 +87,8 @@ struct PastGameView: View {
     
     schedules = response.data!.schedules!
     
-    return PastGameView(for: schedules.first { schedule in
-        schedule.st! == 3
-    }!, true)
+    return FutureGameScheduleView(for: schedules.first { schedule in
+        schedule.st! == 1
+    }!, false)
     .fixedSize()
 }

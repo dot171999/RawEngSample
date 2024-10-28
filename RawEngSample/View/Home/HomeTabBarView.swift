@@ -1,5 +1,5 @@
 //
-//  CustomTabBar.swift
+//  HomeTabBar.swift
 //  RawEngSample
 //
 //  Created by Aryan Sharma on 25/10/24.
@@ -7,22 +7,15 @@
 
 import SwiftUI
 
-import SwiftUI
-
-enum Tab: String, CaseIterable {
-    case schedule = "Schedule"
-    case games = "Games"
-}
-
-struct CustomTabBar: View {
+struct HomeTabBarView: View {
     @Environment(\.colorScheme) private var colorScheme
-    @Binding var selectedTab: Tab
+    @Binding var selectedTab: HomeScreen.Tab
     @Namespace private var animation
     
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
-                ForEach(Tab.allCases, id: \.rawValue) { tab in
+                ForEach(HomeScreen.Tab.allCases, id: \.rawValue) { tab in
                     VStack {
                         Text(tab.rawValue)
                         if selectedTab == tab {
@@ -36,6 +29,7 @@ struct CustomTabBar: View {
                                 .opacity(0)
                         }
                     }
+                    .contentShape(Rectangle())
                     .animation(.snappy, value: selectedTab)
                     .onTapGesture {
                             selectedTab = tab
@@ -54,5 +48,5 @@ struct CustomTabBar: View {
 }
 
 #Preview {
-    CustomTabBar(selectedTab: .constant(Tab.schedule))
+    HomeTabBarView(selectedTab: .constant(HomeScreen.Tab.schedule))
 }

@@ -1,5 +1,5 @@
 //
-//  LiveGameView.swift
+//  LiveGameScheduleView.swift
 //  RawEngSample
 //
 //  Created by Aryan Sharma on 25/10/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LiveGameView: View {
+struct LiveGameScheduleView: View {
     @Environment(\.colorScheme) private var colorScheme
     private var schedule: Schedule
     private var atHome: Bool
@@ -82,7 +82,7 @@ struct LiveGameView: View {
     
     schedules = response.data!.schedules!
     
-    return LiveGameView(for: schedules.first { schedule in
+    return LiveGameScheduleView(for: schedules.first { schedule in
         schedule.st! == 2
     }!, true)
     .fixedSize()

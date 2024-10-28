@@ -167,6 +167,18 @@
         "_in_progress": false,
         "promotion_cards": [
             {
+                "position": 3,
+                "_metadata": {
+                    "uid": "csb48095e2450465ce"
+                },
+                "card": [
+                    {
+                        "uid": "blt5c798e3ce03ab216",
+                        "_content_type_uid": "r_promotion_card"
+                    }
+                ]
+            },
+            {
                 "position": 4,
                 "_metadata": {
                     "uid": "csb48095e2450465ce"

@@ -14,12 +14,19 @@ extension ScheduleView {
         var schedules: [Schedule] = []
         var gameMonths: [String] = []
         var currentMonth: String = "Error"
+        var isScrolling: Bool = false
+        
+        init() {
+            Task {
+                await getScheduleData()
+            }
+        }
         
         func checkingIfPlayingAtHome(_ schedule: Schedule) -> Bool {
             return (schedule.v.tid == homeTeamTid) ? false : true
         }
         
-        func getScheduleData() {
+        func getScheduleData() async {
             
             guard let url = Bundle.main.url(forResource: "Schedule", withExtension: "json") else {
                 return
@@ -42,21 +49,10 @@ extension ScheduleView {
                 gameMonths = schedules.map({ schedule in
                     schedule.readableGameMonYear
                 }).unique()
-                print(gameMonths)
-                
+            
+                currentMonth = gameMonths.first!
             } catch {
                 print(error)
-            }
-        }
-        
-        func setCurrentMonthAndYearFrom(uid id: String) {
-            let isoDateString = schedules.first { schedule in
-                schedule.uid == id
-            }?.gametime
-            
-            let newMonth = isoDateString?.toReadableDateFormatFromISO8601("MMM yyyy") ?? "Error"
-            if currentMonth != newMonth {
-                currentMonth = newMonth
             }
         }
         
@@ -71,8 +67,7 @@ extension ScheduleView {
                 return nil
             }
             currentMonth = gameMonths[nextIndex]
-            
-            print("prev mon ", gameMonths[nextIndex])
+
             return schedules.first { schedule in
                 schedule.readableGameMonYear == gameMonths[nextIndex]
             }?.uid
@@ -85,11 +80,10 @@ extension ScheduleView {
             }
         
             let previousIndex = currentIndex - 1
-            guard previousIndex >= 0 else { return nil }
+            guard previousIndex >= 0 else { return schedules.first?.uid }
             
             currentMonth = gameMonths[previousIndex]
             
-            print("next mon ", gameMonths[previousIndex])
             return schedules.first { schedule in
                 schedule.readableGameMonYear == gameMonths[previousIndex]
             }?.uid
