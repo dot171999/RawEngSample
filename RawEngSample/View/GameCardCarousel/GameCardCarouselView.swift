@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 struct GameCardCarouselView: View {
     @State private var viewModel = ViewModel()
     
@@ -17,13 +16,20 @@ struct GameCardCarouselView: View {
                 LazyHStack(spacing: 20) {
                     Group {
                         ForEach(viewModel.cardSequence, id: \.self) { gameCard in
+                            
                             switch gameCard {
                             case .past(let schedule):
-                                PastGameCardView(backGameCard: viewModel.gameCardData?.past_game_card, schedule: schedule)
+                                let myTeamPlayingAtHome = viewModel.teamService.isMyTeamPlayingAtHome(schedule)
+                                PastGameCardView(pastGameCard: viewModel.gameCardData?.past_game_card, 
+                                                 schedule: schedule, myTeamPlayingAtHome)
                             case .upcoming(let schedule):
-                                GameCardView(.upcoming(viewModel.gameCardData?.upcoming_game), schedule: schedule)
+                                let myTeamPlayingAtHome = viewModel.teamService.isMyTeamPlayingAtHome(schedule)
+                                GameCardView(.upcoming(viewModel.gameCardData?.upcoming_game), 
+                                             schedule: schedule, myTeamPlayingAtHome)
                             case .future(let schedule):
-                                GameCardView(.future(viewModel.gameCardData?.future_game), schedule: schedule)
+                                let myTeamPlayingAtHome = viewModel.teamService.isMyTeamPlayingAtHome(schedule)
+                                GameCardView(.future(viewModel.gameCardData?.future_game), 
+                                             schedule: schedule, myTeamPlayingAtHome)
                             case .promotion(let index):
                                 PromoCardView(pos: index + 1)
                             }

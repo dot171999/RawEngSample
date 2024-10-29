@@ -25,14 +25,14 @@ struct ScheduleView: View {
                         ForEach (viewModel.schedules, id: \.self) { schedule in
                             VStack {
                                 if let status = schedule.st, let game = GameStatus(rawValue:  status) {
-                                    let playingAtHome = viewModel.checkingIfPlayingAtHome(schedule)
+                                    let myTeamPlayingAtHome = viewModel.teamService.isMyTeamPlayingAtHome(schedule)
                                     switch game {
                                     case .future:
-                                        FutureGameScheduleView(for: schedule, playingAtHome)
+                                        FutureGameScheduleView(for: schedule, myTeamPlayingAtHome)
                                     case .live:
-                                        LiveGameScheduleView(for: schedule, playingAtHome)
+                                        LiveGameScheduleView(for: schedule, myTeamPlayingAtHome)
                                     case .past:
-                                        PastGameScheduleView(for: schedule, playingAtHome)
+                                        PastGameScheduleView(for: schedule, myTeamPlayingAtHome)
                                     }
                                 }
                             }
@@ -50,8 +50,8 @@ struct ScheduleView: View {
                                 let minY = scrollInfo.minY
                                 let newMonYear = scrollInfo.month
                                 
-                                if viewModel.currentMonth != newMonYear && minY > scrollViewMinY && minY < triggerAreaThreshold {
-                                    viewModel.currentMonth = schedule.readableGameMonYear
+                                if viewModel.currentHeaderMonth != newMonYear && minY > scrollViewMinY && minY < triggerAreaThreshold {
+                                    viewModel.currentHeaderMonth = schedule.readableGameMonYear
                                 }
                             }
                         }
@@ -72,7 +72,7 @@ struct ScheduleView: View {
                             .frame(maxWidth: .infinity, alignment: .trailing)
                     })
                     
-                    Text(viewModel.currentMonth)
+                    Text(viewModel.currentHeaderMonth)
                         .font(.subheadline)
                     
                     Button(action: {
@@ -94,16 +94,18 @@ struct ScheduleView: View {
     }
 }
 
-struct ScheduleMonthHeaderScrollInfo: Hashable {
-    let minY: CGFloat
-    let month: String
-}
-
-struct ScheduleMonthHeaderPreferenceKey: PreferenceKey {
-    static var defaultValue: ScheduleMonthHeaderScrollInfo = ScheduleMonthHeaderScrollInfo(minY: 0, month: "")
+extension ScheduleView {
+    private struct ScheduleMonthHeaderScrollInfo: Hashable {
+        let minY: CGFloat
+        let month: String
+    }
     
-    static func reduce(value: inout ScheduleMonthHeaderScrollInfo, nextValue: () -> ScheduleMonthHeaderScrollInfo) {
+    private struct ScheduleMonthHeaderPreferenceKey: PreferenceKey {
+        static var defaultValue: ScheduleMonthHeaderScrollInfo = ScheduleMonthHeaderScrollInfo(minY: 0, month: "")
         
+        static func reduce(value: inout ScheduleMonthHeaderScrollInfo, nextValue: () -> ScheduleMonthHeaderScrollInfo) {
+            
+        }
     }
 }
 

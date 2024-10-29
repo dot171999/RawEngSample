@@ -14,9 +14,10 @@ struct GameCardView: View {
         case upcoming(GameCardData.UpcomingGame?)
     }
     
-    let gameCard: FutureOrUpcomingGameCard
+    private let gameCard: FutureOrUpcomingGameCard
+    private let schedule: Schedule
+    var atHome: Bool
     
-    let schedule: Schedule
     var background_image: GameCardData.GameCardBackgroundImage?
     var button: GameCardData.GameCardButton?
     
@@ -28,9 +29,10 @@ struct GameCardView: View {
         }
     }
     
-    init(_ gameCard: FutureOrUpcomingGameCard, schedule: Schedule) {
+    init(_ gameCard: FutureOrUpcomingGameCard, schedule: Schedule, _ atHome: Bool) {
         self.gameCard = gameCard
         self.schedule = schedule
+        self.atHome = atHome
         
         switch gameCard {
         case .future(let futureGame):
@@ -40,10 +42,6 @@ struct GameCardView: View {
             background_image = upcomingGame?.background_image
             button = upcomingGame?.button
         }
-    }
-    
-    var atHome: Bool {
-        return (schedule.v.tid == homeTeamTid) ? false : true
     }
     
     var body: some View {
@@ -63,8 +61,8 @@ struct GameCardView: View {
             VStack {
                 VStack(alignment: .leading, spacing: 10) {
                     HStack {
-                        ResizableAsyncImageView(atHome ? schedule.v.tid : homeTeamTid, size: 45)
-                        ResizableAsyncImageView(atHome ? homeTeamTid : schedule.h.tid , size: 45)
+                        ResizableAsyncImageView(schedule.v.tid, size: 45)
+                        ResizableAsyncImageView(schedule.h.tid , size: 45)
                     }
                     
                     HStack {

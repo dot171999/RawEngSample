@@ -6,16 +6,23 @@
 //
 
 import Foundation
+import Combine
 
 extension GameCardCarouselView {
     @Observable
     class ViewModel {
-        var schedules: [Schedule] = []
-        var gameCardData: GameCardData?
+        private(set) var teamService: TeamServiceProtocol
+        private(set) var scheduleSerivce: ScheduleServiceProtocol
         
-        var futureGames: [Schedule] = []
-        var upcomingGame: Schedule?
-        var pastGames: [Schedule] = []
+        private var schedules: [Schedule] {
+            scheduleSerivce.schedules
+        }
+
+        private(set) var gameCardData: GameCardData?
+        
+        private(set) var futureGames: [Schedule] = []
+        private(set) var upcomingGame: Schedule?
+        private(set) var pastGames: [Schedule] = []
         
         enum GameCard: Hashable {
             case past(Schedule)
@@ -24,16 +31,34 @@ extension GameCardCarouselView {
             case promotion(Int)
         }
         
-        var cardSequence: [GameCard] = []
+        private(set) var cardSequence: [GameCard] = []
         
-        init() {
+        private var cancellable: Any?
+        
+        init(teamService: TeamServiceProtocol = TeamService.shared, scheduleService: ScheduleServiceProtocol = ScheduleService.shared) {
+            self.teamService = teamService
+            self.scheduleSerivce = scheduleService
+            
             Task {
                 await self.getGameCardData()
-                await self.getScheduleData()
+              
                 await MainActor.run {
-                    setup()
+                    setupSubscriptions()
                 }
             }
+        }
+        
+        deinit {
+            if let cancellable = cancellable {
+                NotificationCenter.default.removeObserver(cancellable)
+            }
+        }
+        
+        private func setupSubscriptions() {
+            cancellable = NotificationCenter.default
+                .addObserver(forName: .schedulesDidUpdate, object: nil, queue: .main) { [weak self] _ in
+                    self?.setup()
+                }
         }
         
         func setup() {
@@ -51,7 +76,7 @@ extension GameCardCarouselView {
             for game in futureGames {
                 cardSequence.append(.future(game))
             }
-            
+    
             let sortedPromoCards =  gameCardData?.promotion_cards.sorted {$0.position > $1.position}
             
             for promotionCard in sortedPromoCards ?? [] {
@@ -112,29 +137,6 @@ extension GameCardCarouselView {
                 
                 let response = try decoder.decode(GameCardResponse.self, from: data)
                 gameCardData = response.data
-                
-            } catch {
-                print(error)
-            }
-        }
-        
-        func getScheduleData() async {
-            guard let url = Bundle.main.url(forResource: "Schedule", withExtension: "json") else {
-                return
-            }
-            do {
-                let data = try Data(contentsOf: url)
-                let decoder = JSONDecoder()
-                
-                let response = try decoder.decode(ScheduleResponse.self, from: data)
-                
-                self.schedules = response.data?.schedules?.sorted {
-                    guard let date1 = $0.gametime.toDateFromISO8601(),
-                          let date2 = $1.gametime.toDateFromISO8601() else {
-                        return false
-                    }
-                    return date1 > date2
-                } ?? []
                 
             } catch {
                 print(error)

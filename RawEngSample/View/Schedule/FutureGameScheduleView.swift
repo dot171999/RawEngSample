@@ -30,7 +30,7 @@ struct FutureGameScheduleView: View {
                 .font(.footnote)
                 HStack {
                     HStack {
-                        ResizableAsyncImageView(atHome ? schedule.v.tid : homeTeamTid)
+                        ResizableAsyncImageView(schedule.v.tid)
                         Text(schedule.v.ta)
                             .font(.title2)
                             .fontWeight(.black)
@@ -47,7 +47,7 @@ struct FutureGameScheduleView: View {
                             .font(.title2)
                             .fontWeight(.black)
                             .italic()
-                        ResizableAsyncImageView(atHome ? homeTeamTid : schedule.h.tid)
+                        ResizableAsyncImageView(schedule.h.tid)
                     }
                 }
                 

@@ -7,21 +7,28 @@
 
 import Foundation
 
-let homeTeamTid = "1610612748"
+protocol TeamServiceProtocol: AnyObject {
+    func myTeamId() -> String
+    func iconUrlForTeamId(_ id: String) -> String?
+    func myTeamName() -> String
+    func isMyTeamPlayingAtHome(_ schedule: Schedule) -> Bool
+}
 
-class TeamService {
+@Observable
+class TeamService: TeamServiceProtocol {
     
-    static let shared = TeamService()
+    private let _myTeamId: String = "1610612748"
+    static let shared: TeamService = TeamService()
     private var teams: [Team] = []
     
     private init() {
-        self.getTeamData()
+        teams = loadTeamData()
     }
     
-    func getTeamData() {
+    private func loadTeamData() -> [Team] {
         
         guard let url = Bundle.main.url(forResource: "teams", withExtension: "json") else {
-            return
+            return []
         }
         
         do {
@@ -31,14 +38,24 @@ class TeamService {
             
             let response = try decoder.decode(TeamsResponse.self, from: data)
             
-            self.teams = response.data.teams
+            return response.data.teams
             
         } catch {
             print(error)
         }
+        
+        return []
     }
     
-    func urlForTeamId(_ id: String) -> String? {
+    func isMyTeamPlayingAtHome(_ schedule: Schedule) -> Bool {
+        return (schedule.v.tid == myTeamId()) ? false : true
+    }
+    
+    func myTeamId() -> String {
+        return _myTeamId
+    }
+    
+    func iconUrlForTeamId(_ id: String) -> String? {
         return teams.first { team in
             team.tid == id
         }?.logo
@@ -46,7 +63,7 @@ class TeamService {
     
     func myTeamName() -> String {
         teams.first { team in
-            team.tid == homeTeamTid
+            team.tid == myTeamId()
         }?.ta ?? "TEAM"
     }
 }

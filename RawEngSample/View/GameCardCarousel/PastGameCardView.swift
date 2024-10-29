@@ -8,15 +8,19 @@
 import SwiftUI
 
 struct PastGameCardView: View {
-    let backGameCard: GameCardData.PastGame?
-    let schedule: Schedule
-    var atHome: Bool {
-        return (schedule.v.tid == homeTeamTid) ? false : true
+    private let pastGameCard: GameCardData.PastGame?
+    private let schedule: Schedule
+    private let atHome: Bool
+    
+    init(pastGameCard: GameCardData.PastGame?, schedule: Schedule, _ atHome: Bool) {
+        self.pastGameCard = pastGameCard
+        self.schedule = schedule
+        self.atHome = atHome
     }
     
     var body: some View {
         ZStack {
-            let urlString = backGameCard?.background_image.url
+            let urlString = pastGameCard?.background_image.url
             AsyncImage(url: URL(string: urlString ?? "")) { image in
                 image
                     .resizable()
@@ -65,7 +69,7 @@ struct PastGameCardView: View {
                 Button(action: {
                     
                 }, label: {
-                    let buttonText = backGameCard?.button.cta_text ?? ""
+                    let buttonText = pastGameCard?.button.cta_text ?? ""
                     Text(buttonText)
                         .font(.footnote)
                         .fontWeight(.medium)

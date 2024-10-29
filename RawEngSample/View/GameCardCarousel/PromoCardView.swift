@@ -8,7 +8,11 @@
 import SwiftUI
 
 struct PromoCardView: View {
-    let pos: Int
+    private let pos: Int
+    
+    init(pos: Int) {
+        self.pos = pos
+    }
     
     var body: some View {
         ZStack {

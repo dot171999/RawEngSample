@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct HomeScreen: View {
+    @State private var viewModel = ViewModel()
     @State private var selectedTab: Tab = .schedule
     
     enum Tab: String, CaseIterable {
@@ -17,7 +18,7 @@ struct HomeScreen: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            Text(TeamService.shared.myTeamName())
+            Text(viewModel.teamService.myTeamName())
                 .italic()
                 .font(.title)
                 .fontWeight(.black)

@@ -11,54 +11,26 @@ extension ScheduleView {
     
     @Observable
     class ViewModel {
-        var schedules: [Schedule] = []
-        var gameMonths: [String] = []
-        var currentMonth: String = "Error"
-        var isScrolling: Bool = false
+        private(set) var teamService: TeamServiceProtocol
+        private(set) var scheduleSerivce: ScheduleServiceProtocol
+        var currentHeaderMonth: String = "Loading"
         
-        init() {
-            Task {
-                await getScheduleData()
-            }
+        var schedules: [Schedule] {
+            scheduleSerivce.schedules
+        }
+      
+        var gameMonths: [String] {
+            scheduleSerivce.gameMonths
         }
         
-        func checkingIfPlayingAtHome(_ schedule: Schedule) -> Bool {
-            return (schedule.v.tid == homeTeamTid) ? false : true
-        }
-        
-        func getScheduleData() async {
-            
-            guard let url = Bundle.main.url(forResource: "Schedule", withExtension: "json") else {
-                return
-            }
-            do {
-                
-                let data = try Data(contentsOf: url)
-                let decoder = JSONDecoder()
-                
-                let response = try decoder.decode(ScheduleResponse.self, from: data)
-                
-                self.schedules = response.data?.schedules?.sorted {
-                    guard let date1 = $0.gametime.toDateFromISO8601(),
-                          let date2 = $1.gametime.toDateFromISO8601() else {
-                        return false
-                    }
-                    return date1 > date2
-                } ?? []
-                
-                gameMonths = schedules.map({ schedule in
-                    schedule.readableGameMonYear
-                }).unique()
-            
-                currentMonth = gameMonths.first!
-            } catch {
-                print(error)
-            }
+        init(teamService: TeamServiceProtocol = TeamService.shared, scheduleService: ScheduleServiceProtocol = ScheduleService.shared) {
+            self.teamService = teamService
+            self.scheduleSerivce = scheduleService
         }
         
         func previousMonthId() -> String? {
             
-            guard let currentIndex = gameMonths.firstIndex(of: currentMonth) else {
+            guard let currentIndex = gameMonths.firstIndex(of: currentHeaderMonth) else {
                 return nil
             }
             
@@ -66,7 +38,7 @@ extension ScheduleView {
             guard nextIndex < gameMonths.count else {
                 return nil
             }
-            currentMonth = gameMonths[nextIndex]
+            currentHeaderMonth = gameMonths[nextIndex]
 
             return schedules.first { schedule in
                 schedule.readableGameMonYear == gameMonths[nextIndex]
@@ -75,14 +47,14 @@ extension ScheduleView {
         
         func nextMonthId() -> String? {
            
-            guard let currentIndex = gameMonths.firstIndex(of: currentMonth) else {
+            guard let currentIndex = gameMonths.firstIndex(of: currentHeaderMonth) else {
                 return nil
             }
-        
+            
             let previousIndex = currentIndex - 1
             guard previousIndex >= 0 else { return schedules.first?.uid }
             
-            currentMonth = gameMonths[previousIndex]
+            currentHeaderMonth = gameMonths[previousIndex]
             
             return schedules.first { schedule in
                 schedule.readableGameMonYear == gameMonths[previousIndex]

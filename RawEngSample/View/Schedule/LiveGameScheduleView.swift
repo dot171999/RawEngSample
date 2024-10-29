@@ -30,7 +30,7 @@ struct LiveGameScheduleView: View {
                 .font(.footnote)
                 HStack {
                     VStack {
-                        ResizableAsyncImageView(atHome ? schedule.v.tid : homeTeamTid, size: 60)
+                        ResizableAsyncImageView(schedule.v.tid, size: 60)
                         Text(schedule.v.ta)
                             .fontWeight(.black)
                             .italic()
@@ -58,7 +58,7 @@ struct LiveGameScheduleView: View {
                     .padding(.horizontal)
                     
                     VStack {
-                        ResizableAsyncImageView(atHome ? homeTeamTid : schedule.h.tid , size: 60)
+                        ResizableAsyncImageView(schedule.h.tid , size: 60)
                         Text(schedule.h.ta)
                             .fontWeight(.black)
                             .italic()

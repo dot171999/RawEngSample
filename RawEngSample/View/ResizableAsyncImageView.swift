@@ -17,7 +17,7 @@ struct ResizableAsyncImageView: View {
     }
     
     var body: some View {
-        let urlString = TeamService.shared.urlForTeamId(tid) ?? ""
+        let urlString = TeamService.shared.iconUrlForTeamId(tid) ?? ""
         AsyncImage(url: URL(string: urlString)) { image in
             image
                 .resizable()
