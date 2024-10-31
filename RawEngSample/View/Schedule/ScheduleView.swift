@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ScheduleView: View {
     @Environment(\.colorScheme) private var colorScheme
-    @State private var viewModel = ViewModel()
+    @State private var viewModel = ScheduleViewModel()
     
     private enum GameStatus: Int {
         case future = 1
@@ -25,7 +25,7 @@ struct ScheduleView: View {
                         ForEach (viewModel.schedules, id: \.self) { schedule in
                             VStack {
                                 if let status = schedule.st, let game = GameStatus(rawValue:  status) {
-                                    let myTeamPlayingAtHome = viewModel.teamService.isMyTeamPlayingAtHome(schedule)
+                                    let myTeamPlayingAtHome = viewModel.myTeamPlayingAtHome(schedule)
                                     switch game {
                                     case .future:
                                         FutureGameScheduleView(for: schedule, myTeamPlayingAtHome)
@@ -40,7 +40,7 @@ struct ScheduleView: View {
                             .background(GeometryReader { geometry in
                                 Color.clear.preference(
                                     key: ScheduleMonthHeaderPreferenceKey.self,
-                                    value: ScheduleMonthHeaderScrollInfo(minY: geometry.frame(in: .global).minY, month: schedule.readableGameMonYear)
+                                    value: ScheduleMonthHeaderScrollInfo(minY: geometry.frame(in: .global).minY, month: schedule.readableGameMonthAndYear)
                                 )
                             })
                             .onPreferenceChange(ScheduleMonthHeaderPreferenceKey.self) { scrollInfo in
@@ -51,7 +51,8 @@ struct ScheduleView: View {
                                 let newMonYear = scrollInfo.month
                                 
                                 if viewModel.currentHeaderMonth != newMonYear && minY > scrollViewMinY && minY < triggerAreaThreshold {
-                                    viewModel.currentHeaderMonth = schedule.readableGameMonYear
+                                    print(schedule.readableGameMonthAndYear)
+                                    viewModel.currentHeaderMonth = schedule.readableGameMonthAndYear
                                 }
                             }
                         }
@@ -59,7 +60,6 @@ struct ScheduleView: View {
                 }
                 .contentMargins(.top, 20, for: .scrollContent)
                 .padding(.horizontal)
-                
             }
             .safeAreaInset(edge: .top, spacing: 0) {
                 HStack {
@@ -89,6 +89,15 @@ struct ScheduleView: View {
                 .foregroundStyle(.white)
                 .frame(maxWidth: .infinity)
                 .background(Color("MonthPicker"))
+            }
+        }
+        .refreshable {
+            await viewModel.refresh()
+        }
+        .task {
+            if !viewModel.isSetupDone {
+                viewModel.setup()
+                viewModel.isSetupDone = true
             }
         }
     }

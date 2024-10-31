@@ -7,35 +7,38 @@
 
 import SwiftUI
 
-struct NumericPreferenceKey1: PreferenceKey {
-    static var defaultValue: Int = 0
-    
-    static func reduce(value: inout Int, nextValue: () -> Int) {
-        print("reduce called with value:", value)
-        value += nextValue()
-    }
+struct InnerModel {
+    var name: String = "InnerModel"
+}
+
+@Observable
+class TestViewModel {
+    var innerModel = InnerModel()
+    var done = false
 }
 
 struct Test: View {
-    
+    @State var vm = TestViewModel()
     var body: some View {
-        ScrollView {
-            LazyVStack {
-                ForEach(0..<100) { i in
-                    Rectangle()
-                        .frame(width: 100, height: 50 )
-                }
+        VStack {
+            Text(vm.innerModel.name)
+            let _ = print("11")
+            Button {
+                vm.innerModel.name = "new1"
+            } label: {
+                Text("Button")
             }
         }
-        
-        .onPreferenceChange(NumericPreferenceKey1.self, perform: { value in
-                    print("hello", value)
-        })
+        .task {
+            if !vm.done {
+                print("helo")
+                vm.innerModel.name = "new"
+                vm.done = true
+            }
+        }
+
     }
-    
 }
-
-
 
 #Preview {
     Test()

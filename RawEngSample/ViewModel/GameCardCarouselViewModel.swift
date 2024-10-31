@@ -6,141 +6,154 @@
 //
 
 import Foundation
-import Combine
 
-extension GameCardCarouselView {
-    @Observable
-    class ViewModel {
-        private(set) var teamService: TeamServiceProtocol
-        private(set) var scheduleSerivce: ScheduleServiceProtocol
-        
-        private var schedules: [Schedule] {
-            scheduleSerivce.schedules
-        }
-
-        private(set) var gameCardData: GameCardData?
-        
-        private(set) var futureGames: [Schedule] = []
-        private(set) var upcomingGame: Schedule?
-        private(set) var pastGames: [Schedule] = []
-        
-        enum GameCard: Hashable {
-            case past(Schedule)
-            case upcoming(Schedule)
-            case future(Schedule)
-            case promotion(Int)
-        }
-        
-        private(set) var cardSequence: [GameCard] = []
-        
-        private var cancellable: Any?
-        
-        init(teamService: TeamServiceProtocol = TeamService.shared, scheduleService: ScheduleServiceProtocol = ScheduleService.shared) {
-            self.teamService = teamService
-            self.scheduleSerivce = scheduleService
-            
-            Task {
-                await self.getGameCardData()
-              
-                await MainActor.run {
-                    setupSubscriptions()
-                }
-            }
-        }
-        
-        deinit {
-            if let cancellable = cancellable {
-                NotificationCenter.default.removeObserver(cancellable)
-            }
-        }
-        
-        private func setupSubscriptions() {
-            cancellable = NotificationCenter.default
-                .addObserver(forName: .schedulesDidUpdate, object: nil, queue: .main) { [weak self] _ in
-                    self?.setup()
-                }
-        }
-        
-        func setup() {
-            setupPastGames()
-            setupUpcomingGameAndFutureGames()
-            
-            for game in pastGames {
-                cardSequence.append(.past(game))
-            }
-            
-            if let game = upcomingGame {
-                cardSequence.append(.upcoming(game))
-            }
-            
-            for game in futureGames {
-                cardSequence.append(.future(game))
-            }
+@Observable class GameCardCarouselViewModel {
+    private let teamService: TeamServiceProtocol
+    private let scheduleSerivce: ScheduleServiceProtocol
+    private let networkManager: NetworkManagerProtocol
     
-            let sortedPromoCards =  gameCardData?.promotion_cards.sorted {$0.position > $1.position}
-            
-            for promotionCard in sortedPromoCards ?? [] {
-                let index = promotionCard.position - 1
-                
-                if index <= cardSequence.count {
-                    cardSequence.insert(.promotion(index), at: index)
-                } else {
-                    cardSequence.append(.promotion(index))
-                }
-            }
+    private var schedules: [Schedule] {
+        scheduleSerivce.schedules
+    }
+    
+    private var cancellable: Any?
+    
+    private var futureGames: [Schedule] = []
+    private var upcomingGame: Schedule?
+    private var pastGames: [Schedule] = []
+    
+    private(set) var gameCardData: GameCardData?
+    private(set) var cardSequence: [GameCard] = []
+    
+    @ObservationIgnored var isSetupDone: Bool = false
+    
+    enum GameCard: Hashable {
+        case past(Schedule)
+        case upcoming(Schedule)
+        case future(Schedule)
+        case promotion(Int)
+    }
+    
+    init(teamService: TeamServiceProtocol = TeamService.shared, scheduleService: ScheduleServiceProtocol = ScheduleService.shared, networkManager: NetworkManagerProtocol = NetworkManager()) {
+        self.teamService = teamService
+        self.scheduleSerivce = scheduleService
+        self.networkManager = networkManager
+    }
+    
+    deinit {
+        print("carav vm dinit")
+        if let cancellable = cancellable {
+            NotificationCenter.default.removeObserver(cancellable)
+        }
+    }
+    
+    @MainActor
+    func setup() async {
+        setupSubscription()
+        
+        let gameCardData = await getGameCardData()
+        
+        if let data = gameCardData {
+            self.gameCardData = data
+            self.setupCards()
+        }
+    }
+
+    func refresh() async {
+        await teamService.refresh()
+        await scheduleSerivce.refresh()
+        
+        await MainActor.run { [weak self] in
+            self?.cleanSlate()
+        }
+        await setup()
+    }
+    
+    private func cleanSlate() {
+        futureGames = []
+        upcomingGame = nil
+        pastGames = []
+        cardSequence = []
+    }
+    
+    private func setupSubscription() {
+        if let cancellable = cancellable { NotificationCenter.default.removeObserver(cancellable) }
+        cancellable = NotificationCenter.default.addObserver(forName: .schedulesDidUpdate, object: nil, queue: .main) { [weak self] _ in
+            guard self?.gameCardData != nil else { return }
+            self?.cleanSlate()
+            self?.setupCards()
+        }
+    }
+    
+    private func getGameCardData() async ->  GameCardData? {
+        guard let url = Bundle.main.url(forResource: "Game Card Data", withExtension: "json") else { return nil }
+        
+        do {
+            let gameCardResponse: GameCardResponse = try await networkManager.getModel(from: url)
+            return gameCardResponse.data
+        } catch {
+            print(error)
+        }
+        return nil
+    }
+    
+    private func setupCards() {
+        setupPastGames()
+        setupUpcomingGameAndFutureGames()
+        
+        for game in pastGames {
+            cardSequence.append(.past(game))
         }
         
-        func setupUpcomingGameAndFutureGames() {
-            let currentDate = Date()
-            var allFutureGames = schedules.filter { schedule in
-                guard let gameDate = schedule.gametime.toDateFromISO8601() else {
-                    return false
-                }
-                
-                return gameDate > currentDate
-            }
-            
-            upcomingGame = allFutureGames.last
-            
-            guard let numberOfFutureGames = gameCardData?.game_card_config.future_game_count else {
-                return
-            }
-            
-            allFutureGames = allFutureGames.dropLast()
-            
-            futureGames = Array(allFutureGames.suffix(numberOfFutureGames))
+        if let game = upcomingGame {
+            cardSequence.append(.upcoming(game))
         }
         
-        func setupPastGames() {
-            guard let numberOfPastGames = gameCardData?.game_card_config.past_game_count else {
-                return
-            }
-            let currentDate = Date()
-            let allPastGames = schedules.filter { schedule in
-                guard let gameDate = schedule.gametime.toDateFromISO8601() else {
-                    return false
-                }
-                
-                return gameDate < currentDate
-            }
-            pastGames = Array(allPastGames.prefix(numberOfPastGames))
+        for game in futureGames {
+            cardSequence.append(.future(game))
         }
         
-        func getGameCardData() async {
+        let sortedPromoCards =  gameCardData?.promotion_cards.sorted { $0.position > $1.position }
+        
+        for promotionCard in sortedPromoCards ?? [] {
+            let index = promotionCard.position - 1
             
-            guard let url = Bundle.main.url(forResource: "Game Card Data", withExtension: "json") else {
-                return
-            }
-            do {
-                let data = try Data(contentsOf: url)
-                let decoder = JSONDecoder()
-                
-                let response = try decoder.decode(GameCardResponse.self, from: data)
-                gameCardData = response.data
-                
-            } catch {
-                print(error)
+            if index <= cardSequence.count {
+                cardSequence.insert(.promotion(index), at: index)
+            } else {
+                cardSequence.append(.promotion(index))
             }
         }
     }
+    
+    private func setupUpcomingGameAndFutureGames() {
+        let currentDate = Date()
+        var allFutureGames = schedules.filter { schedule in
+            guard let gameDate = schedule.gametime.toDateFromISO8601() else { return false }
+            return gameDate > currentDate
+        }
+        
+        upcomingGame = allFutureGames.last
+        
+        guard let numberOfFutureGames = gameCardData?.game_card_config.future_game_count else { return }
+        
+        allFutureGames = allFutureGames.dropLast()
+        
+        futureGames = Array(allFutureGames.suffix(numberOfFutureGames))
+    }
+    
+    private func setupPastGames() {
+        guard let numberOfPastGames = gameCardData?.game_card_config.past_game_count else { return }
+        let currentDate = Date()
+        let allPastGames = schedules.filter { schedule in
+            guard let gameDate = schedule.gametime.toDateFromISO8601() else { return false }
+            return gameDate < currentDate
+        }
+        pastGames = Array(allPastGames.prefix(numberOfPastGames))
+    }
+    
+    func myTeamPlayingAtHome(_ schedule: Schedule) -> Bool {
+        return teamService.isMyTeamPlayingAtHome(schedule)
+    }
 }
+

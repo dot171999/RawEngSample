@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import UIKit.UIImage
 
 struct ResizableAsyncImageView: View {
+    @State private var viewModel = ResizableAsyncImageViewModel()
+    
     private let tid: String
     private let size: CGFloat
     
@@ -17,16 +20,20 @@ struct ResizableAsyncImageView: View {
     }
     
     var body: some View {
-        let urlString = TeamService.shared.iconUrlForTeamId(tid) ?? ""
-        AsyncImage(url: URL(string: urlString)) { image in
-            image
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-        } placeholder: {
-            ProgressView()
-                .progressViewStyle(.circular)
+        VStack {
+            if let data = viewModel.imageData, let image = UIImage(data: data) {
+                Image(uiImage: image)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+            } else {
+                ProgressView()
+                    .progressViewStyle(.circular)
+            }
         }
         .frame(width: size, height: size)
+        .task {
+            await viewModel.imageDataFor(tid)
+        }
     }
 }
 

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeScreen: View {
-    @State private var viewModel = ViewModel()
+    @State private var viewModel = HomeScreenViewModel()
     @State private var selectedTab: Tab = .schedule
     
     enum Tab: String, CaseIterable {
@@ -18,7 +18,7 @@ struct HomeScreen: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            Text(viewModel.teamService.myTeamName())
+            Text(viewModel.teamName)
                 .italic()
                 .font(.title)
                 .fontWeight(.black)
@@ -28,7 +28,6 @@ struct HomeScreen: View {
                 .padding(.top)
             
             TabView(selection: $selectedTab) {
-                
                ScheduleView()
                     .tag(Tab.schedule)
                 
@@ -39,6 +38,9 @@ struct HomeScreen: View {
             .tabViewStyle(.page(indexDisplayMode: .never))
         }
         .ignoresSafeArea(edges: .bottom)
+        .onAppear {
+            viewModel.setup()
+        }
     }
 }
 

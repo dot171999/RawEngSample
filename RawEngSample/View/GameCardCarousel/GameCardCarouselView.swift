@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct GameCardCarouselView: View {
-    @State private var viewModel = ViewModel()
+    @State private var viewModel = GameCardCarouselViewModel()
     
     var body: some View {
         GeometryReader { proxy in
@@ -19,15 +19,15 @@ struct GameCardCarouselView: View {
                             
                             switch gameCard {
                             case .past(let schedule):
-                                let myTeamPlayingAtHome = viewModel.teamService.isMyTeamPlayingAtHome(schedule)
-                                PastGameCardView(pastGameCard: viewModel.gameCardData?.past_game_card, 
+                                let myTeamPlayingAtHome = viewModel.myTeamPlayingAtHome(schedule)
+                                PastGameCardView(pastGameCard: viewModel.gameCardData?.past_game_card,
                                                  schedule: schedule, myTeamPlayingAtHome)
                             case .upcoming(let schedule):
-                                let myTeamPlayingAtHome = viewModel.teamService.isMyTeamPlayingAtHome(schedule)
-                                GameCardView(.upcoming(viewModel.gameCardData?.upcoming_game), 
+                                let myTeamPlayingAtHome = viewModel.myTeamPlayingAtHome(schedule)
+                                GameCardView(.upcoming(viewModel.gameCardData?.upcoming_game),
                                              schedule: schedule, myTeamPlayingAtHome)
                             case .future(let schedule):
-                                let myTeamPlayingAtHome = viewModel.teamService.isMyTeamPlayingAtHome(schedule)
+                                let myTeamPlayingAtHome = viewModel.myTeamPlayingAtHome(schedule)
                                 GameCardView(.future(viewModel.gameCardData?.future_game), 
                                              schedule: schedule, myTeamPlayingAtHome)
                             case .promotion(let index):
@@ -47,6 +47,12 @@ struct GameCardCarouselView: View {
             .scrollTargetBehavior(.viewAligned)
         }
         .padding(.top)
+        .task {
+            if !viewModel.isSetupDone {
+                await viewModel.setup()
+                viewModel.isSetupDone = true
+            }
+        }
     }
 }
 

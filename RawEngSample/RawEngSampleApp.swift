@@ -13,7 +13,6 @@ struct RawEngSampleApp: App {
     var body: some Scene {
         WindowGroup {
             HomeScreen()
-              
         }
     }
 }

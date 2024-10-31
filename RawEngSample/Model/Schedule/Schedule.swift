@@ -35,7 +35,7 @@ struct Schedule : Decodable, Hashable {
     
     let readableGameDate: String
     let readableGameTime: String
-    let readableGameMonYear: String
+    let readableGameMonthAndYear: String
     
 	enum CodingKeys: String, CodingKey {
 
@@ -94,7 +94,7 @@ struct Schedule : Decodable, Hashable {
         
         readableGameDate = gametime.toReadableDateFormatFromISO8601("EEE MMM dd") ?? ""
         readableGameTime = gametime.toReadableDateFormatFromISO8601("h:mm a") ?? ""
-        readableGameMonYear = gametime.toReadableDateFormatFromISO8601("MMM yyyy") ?? ""
+        readableGameMonthAndYear = gametime.toReadableDateFormatFromISO8601("MMM yyyy") ?? ""
 	}
 }
 
