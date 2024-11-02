@@ -8,10 +8,12 @@
 import Foundation
 
 protocol TeamServiceProtocol: AnyObject {
+    func addSubscriber(with id: UUID, _ callback: @escaping () -> Void)
+    func removeSubscriber(_ id: UUID)
+    func refresh() async
     func myTeamName() -> String
     func isMyTeamPlayingAtHome(_ schedule: Schedule) -> Bool
     func getIconDataForTeam(_ tid: String) async throws -> Data?
-    func refresh() async
 }
 
 class TeamService: TeamServiceProtocol {
@@ -21,9 +23,11 @@ class TeamService: TeamServiceProtocol {
     private let networkManager: NetworkManagerProtocol = NetworkManager()
     private var teams: [Team] = [] {
         didSet {
-            NotificationCenter.default.post(name: .schedulesDidUpdate, object: nil)
+            NotificationCenter.default.post(name: .teamsDidUpdate, object: nil)
+            notifySubscribers()
         }
     }
+    private var subscribers: [UUID: () -> Void] = [:]
     
     private init() {
         Task { [weak self] in
@@ -36,10 +40,25 @@ class TeamService: TeamServiceProtocol {
         await MainActor.run { [weak self] in
             self?.teams = teams
         }
+        
     }
     
     func refresh() async {
         await setup()
+    }
+    
+    func addSubscriber(with id: UUID, _ callback: @escaping () -> Void) {
+        subscribers[id] = callback
+    }
+    
+    func removeSubscriber(_ id: UUID) {
+        subscribers.removeValue(forKey: id)
+    }
+    
+    private func notifySubscribers() {
+        for subscriber in subscribers.values {
+            subscriber()
+        }
     }
     
     private func getTeams() async -> [Team] {

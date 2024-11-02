@@ -9,6 +9,8 @@ import Foundation
 
 protocol ScheduleServiceProtocol: AnyObject {
     var schedules: [Schedule] { get }
+    func addSubscriber(with id: UUID, _ callback: @escaping () -> Void)
+    func removeSubscriber(_ id: UUID)
     func refresh() async
 }
 
@@ -19,9 +21,11 @@ class ScheduleService:  ScheduleServiceProtocol {
     
     private(set) var schedules: [Schedule] = [] {
         didSet {
-            NotificationCenter.default.post(name: .schedulesDidUpdate, object: nil)
+            notifySubscribers()
         }
     }
+    
+    private var subscribers: [UUID: () -> Void] = [:]
     
     init() {
         Task { [weak self] in
@@ -40,6 +44,20 @@ class ScheduleService:  ScheduleServiceProtocol {
     
     func refresh() async {
        await setup()
+    }
+    
+    func addSubscriber(with id: UUID, _ callback: @escaping () -> Void) {
+        subscribers[id] = callback
+    }
+    
+    func removeSubscriber(_ id: UUID) {
+        subscribers.removeValue(forKey: id)
+    }
+    
+    private func notifySubscribers() {
+        for subscriber in subscribers.values {
+            subscriber()
+        }
     }
     
     private func getSchedules() async -> [Schedule] {

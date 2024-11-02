@@ -12,20 +12,19 @@ import Foundation
     private let scheduleSerivce: ScheduleServiceProtocol
     private let networkManager: NetworkManagerProtocol
     
+    private let id: UUID = UUID()
+    private var isSetupDone: Bool = false
+    
     private var schedules: [Schedule] {
         scheduleSerivce.schedules
     }
-    
-    private var cancellable: Any?
+    private(set) var gameCardData: GameCardData?
+    private(set) var foucsCard: Int = 1
     
     private var futureGames: [Schedule] = []
     private var upcomingGame: Schedule?
     private var pastGames: [Schedule] = []
-    
-    private(set) var gameCardData: GameCardData?
     private(set) var cardSequence: [GameCard] = []
-    
-    @ObservationIgnored var isSetupDone: Bool = false
     
     enum GameCard: Hashable {
         case past(Schedule)
@@ -41,47 +40,34 @@ import Foundation
     }
     
     deinit {
-        print("carav vm dinit")
-        if let cancellable = cancellable {
-            NotificationCenter.default.removeObserver(cancellable)
-        }
+        scheduleSerivce.removeSubscriber(id)
     }
     
     @MainActor
     func setup() async {
-        setupSubscription()
+        guard !isSetupDone else { return }
         
+        setupSubscription()
+        await setupProperties()
+        
+        isSetupDone = true
+    }
+    
+    private func setupSubscription() {
+        scheduleSerivce.addSubscriber(with: id) { [weak self] in
+            guard self?.gameCardData != nil else { return }
+            self?.cleanSlate()
+            self?.setupCards()
+        }
+    }
+    
+    private func setupProperties() async {
         let gameCardData = await getGameCardData()
         
         if let data = gameCardData {
             self.gameCardData = data
             self.setupCards()
-        }
-    }
-
-    func refresh() async {
-        await teamService.refresh()
-        await scheduleSerivce.refresh()
-        
-        await MainActor.run { [weak self] in
-            self?.cleanSlate()
-        }
-        await setup()
-    }
-    
-    private func cleanSlate() {
-        futureGames = []
-        upcomingGame = nil
-        pastGames = []
-        cardSequence = []
-    }
-    
-    private func setupSubscription() {
-        if let cancellable = cancellable { NotificationCenter.default.removeObserver(cancellable) }
-        cancellable = NotificationCenter.default.addObserver(forName: .schedulesDidUpdate, object: nil, queue: .main) { [weak self] _ in
-            guard self?.gameCardData != nil else { return }
-            self?.cleanSlate()
-            self?.setupCards()
+            self.foucsCard = data.game_card_config.focus_card
         }
     }
     
@@ -113,7 +99,7 @@ import Foundation
             cardSequence.append(.future(game))
         }
         
-        let sortedPromoCards =  gameCardData?.promotion_cards.sorted { $0.position > $1.position }
+        let sortedPromoCards =  gameCardData?.promotion_cards.sorted { $0.position < $1.position }
         
         for promotionCard in sortedPromoCards ?? [] {
             let index = promotionCard.position - 1
@@ -154,6 +140,13 @@ import Foundation
     
     func myTeamPlayingAtHome(_ schedule: Schedule) -> Bool {
         return teamService.isMyTeamPlayingAtHome(schedule)
+    }
+    
+    private func cleanSlate() {
+        futureGames = []
+        upcomingGame = nil
+        pastGames = []
+        cardSequence = []
     }
 }
 

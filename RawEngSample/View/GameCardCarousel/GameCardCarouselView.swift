@@ -12,46 +12,50 @@ struct GameCardCarouselView: View {
     
     var body: some View {
         GeometryReader { proxy in
-            ScrollView(.horizontal) {
-                LazyHStack(spacing: 20) {
-                    Group {
-                        ForEach(viewModel.cardSequence, id: \.self) { gameCard in
-                            
-                            switch gameCard {
-                            case .past(let schedule):
-                                let myTeamPlayingAtHome = viewModel.myTeamPlayingAtHome(schedule)
-                                PastGameCardView(pastGameCard: viewModel.gameCardData?.past_game_card,
-                                                 schedule: schedule, myTeamPlayingAtHome)
-                            case .upcoming(let schedule):
-                                let myTeamPlayingAtHome = viewModel.myTeamPlayingAtHome(schedule)
-                                GameCardView(.upcoming(viewModel.gameCardData?.upcoming_game),
-                                             schedule: schedule, myTeamPlayingAtHome)
-                            case .future(let schedule):
-                                let myTeamPlayingAtHome = viewModel.myTeamPlayingAtHome(schedule)
-                                GameCardView(.future(viewModel.gameCardData?.future_game), 
-                                             schedule: schedule, myTeamPlayingAtHome)
-                            case .promotion(let index):
-                                PromoCardView(pos: index + 1)
+            ScrollViewReader { scrollReader in
+                ScrollView(.horizontal) {
+                    LazyHStack(spacing: 20) {
+                        Group {
+                            ForEach(Array(viewModel.cardSequence.enumerated()), id: \.element) { cardIndex, gameCard in
+                                Group {
+                                    switch gameCard {
+                                    case .past(let schedule):
+                                        let myTeamPlayingAtHome = viewModel.myTeamPlayingAtHome(schedule)
+                                        PastGameCardView(pastGameCard: viewModel.gameCardData?.past_game_card,
+                                                         schedule: schedule, myTeamPlayingAtHome)
+                                    case .upcoming(let schedule):
+                                        let myTeamPlayingAtHome = viewModel.myTeamPlayingAtHome(schedule)
+                                        GameCardView(.upcoming(viewModel.gameCardData?.upcoming_game),
+                                                     schedule: schedule, myTeamPlayingAtHome)
+                                    case .future(let schedule):
+                                        let myTeamPlayingAtHome = viewModel.myTeamPlayingAtHome(schedule)
+                                        GameCardView(.future(viewModel.gameCardData?.future_game),
+                                                     schedule: schedule, myTeamPlayingAtHome)
+                                    case .promotion(let index):
+                                        PromoCardView(pos: index + 1)
+                                    }
+                                }
+                                .id(cardIndex)
                             }
                         }
+                        .frame(width: proxy.size.width - 60)
+                        .clipShape(.rect(cornerRadius: 20))
                     }
-                    .frame(width: proxy.size.width - 60)
-                    
-                    .clipShape(.rect(cornerRadius: 20))
+                    .frame(height: proxy.size.width - 60)
+                    .scrollTargetLayout()
                 }
-                .frame(height: proxy.size.width - 60)
-                .scrollTargetLayout()
+                .safeAreaPadding(.horizontal, 30)
+                .scrollIndicators(.hidden)
+                .scrollTargetBehavior(.viewAligned)
+                .onChange(of: viewModel.foucsCard) { _, newValue in
+                    let cardIndex = newValue - 1
+                    scrollReader.scrollTo(cardIndex, anchor: .leading)
+                }
             }
-            .safeAreaPadding(.horizontal, 30)
-            .scrollIndicators(.hidden)
-            .scrollTargetBehavior(.viewAligned)
         }
         .padding(.top)
         .task {
-            if !viewModel.isSetupDone {
-                await viewModel.setup()
-                viewModel.isSetupDone = true
-            }
+            await viewModel.setup()
         }
     }
 }

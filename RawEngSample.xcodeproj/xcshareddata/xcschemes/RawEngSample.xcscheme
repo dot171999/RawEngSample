@@ -46,7 +46,7 @@
             parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "92204E722CCFD11F00A3E942"
+               BlueprintIdentifier = "920B4A3B2CD4C87200FE3236"
                BuildableName = "RawEngSampleUITests.xctest"
                BlueprintName = "RawEngSampleUITests"
                ReferencedContainer = "container:RawEngSample.xcodeproj">

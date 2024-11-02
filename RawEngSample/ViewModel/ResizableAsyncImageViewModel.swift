@@ -15,11 +15,12 @@ import Foundation
         self.teamService = teamService
     }
     
-    @MainActor
     func imageDataFor(_ tid: String) async {
         do {
             let data = try await teamService.getIconDataForTeam(tid)
-            imageData = data
+            await MainActor.run { [weak self] in
+                self?.imageData = data
+            }
         } catch {
             print("error: ", error)
         }

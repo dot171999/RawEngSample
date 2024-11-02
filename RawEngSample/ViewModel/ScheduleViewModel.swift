@@ -10,7 +10,9 @@ import Foundation
 @Observable class ScheduleViewModel {
     private var teamService: TeamServiceProtocol
     private var scheduleSerivce: ScheduleServiceProtocol
-    private var cancellable: Any?
+    
+    private let id: UUID = UUID()
+    private var isSetupDone: Bool = false
     
     var currentHeaderMonth: String = "Loading" {
         didSet {
@@ -19,8 +21,7 @@ import Foundation
     }
     private(set) var schedules: [Schedule] = []
     private(set) var gameMonths: [String] = []
-    
-    @ObservationIgnored var isSetupDone: Bool = false
+    private(set) var upcomingGameId: String = ""
     
     init(teamService: TeamServiceProtocol = TeamService.shared, scheduleService: ScheduleServiceProtocol = ScheduleService.shared) {
         self.teamService = teamService
@@ -28,15 +29,37 @@ import Foundation
     }
     
     deinit {
-        if let cancellable = cancellable {
-            NotificationCenter.default.removeObserver(cancellable)
-        }
+        scheduleSerivce.removeSubscriber(id)
     }
     
     func setup() {
+        guard !isSetupDone else { return }
+        
         setupSubscription()
+        setupProperties()
+        isSetupDone = true
+    }
+    
+    private func setupSubscription() {
+        scheduleSerivce.addSubscriber(with: id) { [weak self] in
+            self?.setupProperties()
+        }
+    }
+    
+    private func setupProperties() {
         schedules = scheduleSerivce.schedules
         gameMonths = uniqueGameMonths(from: schedules)
+        upcomingGameId = nextUpcomingGameId()
+    }
+    
+    private func nextUpcomingGameId() -> String {
+        let currentDate = Date()
+        let allFutureGames = schedules.filter { schedule in
+            guard let gameDate = schedule.gametime.toDateFromISO8601() else { return false }
+            return gameDate > currentDate
+        }
+        
+        return allFutureGames.last?.uid ?? ""
     }
     
     func refresh() async {
@@ -44,18 +67,8 @@ import Foundation
         await teamService.refresh()
     }
     
-    private func setupSubscription() {
-        if let cancellable = cancellable { NotificationCenter.default.removeObserver(cancellable) }
-        cancellable = NotificationCenter.default.addObserver(forName: .schedulesDidUpdate, object: nil, queue: .main) { [weak self] _ in
-            self?.setup()
-        }
-    }
-    
     func previousMonthId() -> String? {
-        
-        guard let currentIndex = gameMonths.firstIndex(of: currentHeaderMonth) else {
-            return nil
-        }
+        guard let currentIndex = gameMonths.firstIndex(of: currentHeaderMonth) else { return nil }
         
         let nextIndex = currentIndex + 1
         guard nextIndex < gameMonths.count else {

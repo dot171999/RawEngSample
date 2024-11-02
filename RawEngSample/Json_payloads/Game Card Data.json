@@ -2,7 +2,7 @@
     "entry": {
         "title": "Game Card",
         "game_card_config": {
-            "focus_card": 1,
+            "focus_card": 2,
             "future_game_count": 1,
             "past_game_count": 1
         },
@@ -167,7 +167,7 @@
         "_in_progress": false,
         "promotion_cards": [
             {
-                "position": 3,
+                "position": 2,
                 "_metadata": {
                     "uid": "csb48095e2450465ce"
                 },
@@ -180,6 +180,18 @@
             },
             {
                 "position": 4,
+                "_metadata": {
+                    "uid": "csb48095e2450465ce"
+                },
+                "card": [
+                    {
+                        "uid": "blt5c798e3ce03ab216",
+                        "_content_type_uid": "r_promotion_card"
+                    }
+                ]
+            },
+            {
+                "position": 8,
                 "_metadata": {
                     "uid": "csb48095e2450465ce"
                 },

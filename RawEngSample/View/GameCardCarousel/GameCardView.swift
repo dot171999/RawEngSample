@@ -16,12 +16,12 @@ struct GameCardView: View {
     
     private let gameCard: FutureOrUpcomingGameCard
     private let schedule: Schedule
-    var atHome: Bool
+    private var atHome: Bool
     
-    var background_image: GameCardData.GameCardBackgroundImage?
-    var button: GameCardData.GameCardButton?
+    private var background_image: GameCardData.GameCardBackgroundImage?
+    private var button: GameCardData.GameCardButton?
     
-    var isUpcomingGame: Bool {
+    private var isUpcomingGame: Bool {
         if case .upcoming = gameCard {
             return true
         } else {

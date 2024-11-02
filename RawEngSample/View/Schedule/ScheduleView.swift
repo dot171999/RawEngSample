@@ -90,15 +90,17 @@ struct ScheduleView: View {
                 .frame(maxWidth: .infinity)
                 .background(Color("MonthPicker"))
             }
+            .onChange(of: viewModel.upcomingGameId, { _, upcomingGameId in
+                if !upcomingGameId.isEmpty {
+                    scrollReader.scrollTo(upcomingGameId, anchor: .top)
+                }
+            })
         }
         .refreshable {
             await viewModel.refresh()
         }
         .task {
-            if !viewModel.isSetupDone {
-                viewModel.setup()
-                viewModel.isSetupDone = true
-            }
+            viewModel.setup()
         }
     }
 }

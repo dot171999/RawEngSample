@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeTabBarView: View {
     @Environment(\.colorScheme) private var colorScheme
-    @Binding var selectedTab: HomeScreen.Tab
+    @Binding private(set) var selectedTab: HomeScreen.Tab
     @Namespace private var animation
     
     var body: some View {

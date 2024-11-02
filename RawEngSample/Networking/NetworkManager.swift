@@ -25,9 +25,8 @@ class NetworkManager: NetworkManagerProtocol {
     
     // Simulate API call
     func getModel<T: Decodable>(from url: URL) async throws -> T {
-
         do {
-            try await Task.sleep(for: .seconds(1))
+            try await Task.sleep(for: .seconds(0.2))
         } catch {
             print("error: ", error, "url: ", url)
         }

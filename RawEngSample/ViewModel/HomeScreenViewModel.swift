@@ -9,31 +9,36 @@ import Foundation
 
 @Observable class HomeScreenViewModel {
     private let teamService: TeamServiceProtocol
-    private(set) var teamName: String = ""
-    private var cancellable: Any?
     
-    @ObservationIgnored var isSetupDone: Bool = false
+    private let id: UUID = UUID()
+    private var isSetupDone: Bool = false
+    private(set) var teamName: String = ""
     
     init(teamService: TeamServiceProtocol = TeamService.shared) {
         self.teamService = teamService
     }
     
     deinit {
-        if let cancellable = cancellable {
-            NotificationCenter.default.removeObserver(cancellable)
-        }
+        teamService.removeSubscriber(id)
     }
     
     func setup() {
-        teamName = teamService.myTeamName()
+        guard !isSetupDone else { return }
+        
         setupSubscription()
+        setupProperties()
+        
+        isSetupDone = true
     }
     
     private func setupSubscription() {
-        if let cancellable = cancellable { NotificationCenter.default.removeObserver(cancellable) }
-        cancellable = NotificationCenter.default.addObserver(forName: .teamsDidUpdate, object: nil, queue: .main) { [weak self] _ in
-            self?.setup()
+        teamService.addSubscriber(with: id) { [weak self] in
+            self?.setupProperties()
         }
+    }
+    
+    private func setupProperties() {
+        teamName = teamService.myTeamName()
     }
 }
 

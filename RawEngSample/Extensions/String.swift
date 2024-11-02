@@ -8,7 +8,6 @@
 import Foundation
 
 extension String {
-    
     func toReadableDateFormatFromISO8601(_ dateFormat: String) -> String? {
         let isoFormatter = ISO8601DateFormatter()
         isoFormatter.formatOptions.insert(.withFractionalSeconds)

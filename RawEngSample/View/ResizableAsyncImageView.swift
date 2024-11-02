@@ -32,7 +32,9 @@ struct ResizableAsyncImageView: View {
         }
         .frame(width: size, height: size)
         .task {
-            await viewModel.imageDataFor(tid)
+            if viewModel.imageData == nil {
+                await viewModel.imageDataFor(tid)
+            }
         }
     }
 }
