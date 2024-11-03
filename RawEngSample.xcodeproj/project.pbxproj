@@ -10,6 +10,8 @@
 		920B4A372CD4AE0400FE3236 /* HomeScreenViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B4A362CD4AE0400FE3236 /* HomeScreenViewModelTests.swift */; };
 		920B4A3F2CD4C87200FE3236 /* RawEngSampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B4A3E2CD4C87200FE3236 /* RawEngSampleUITests.swift */; };
 		920B4A412CD4C87200FE3236 /* RawEngSampleUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B4A402CD4C87200FE3236 /* RawEngSampleUITestsLaunchTests.swift */; };
+		920B4A482CD7487800FE3236 /* CountdownTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B4A472CD7487800FE3236 /* CountdownTimerView.swift */; };
+		920B4A4A2CD754CB00FE3236 /* CountdownTimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B4A492CD754CB00FE3236 /* CountdownTimerViewModel.swift */; };
 		92195BDD2CCF8CC000A88C4E /* PastGameCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92195BDC2CCF8CC000A88C4E /* PastGameCardView.swift */; };
 		92195BDF2CCF8D0400A88C4E /* GameCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92195BDE2CCF8D0400A88C4E /* GameCardView.swift */; };
 		92204E7F2CD0F5D000A3E942 /* HomeScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92204E7E2CD0F5D000A3E942 /* HomeScreenViewModel.swift */; };
@@ -73,6 +75,8 @@
 		920B4A3C2CD4C87200FE3236 /* RawEngSampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RawEngSampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		920B4A3E2CD4C87200FE3236 /* RawEngSampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawEngSampleUITests.swift; sourceTree = "<group>"; };
 		920B4A402CD4C87200FE3236 /* RawEngSampleUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawEngSampleUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		920B4A472CD7487800FE3236 /* CountdownTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimerView.swift; sourceTree = "<group>"; };
+		920B4A492CD754CB00FE3236 /* CountdownTimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimerViewModel.swift; sourceTree = "<group>"; };
 		92195BDC2CCF8CC000A88C4E /* PastGameCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastGameCardView.swift; sourceTree = "<group>"; };
 		92195BDE2CCF8D0400A88C4E /* GameCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCardView.swift; sourceTree = "<group>"; };
 		92204E7E2CD0F5D000A3E942 /* HomeScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenViewModel.swift; sourceTree = "<group>"; };
@@ -198,6 +202,7 @@
 				92498E6A2CCB9882008DFF44 /* ScheduleViewModel.swift */,
 				922A481A2CCE1CFA004E3B02 /* GameCardCarouselViewModel.swift */,
 				9294D34E2CD27A4200F317C0 /* ResizableAsyncImageViewModel.swift */,
+				920B4A492CD754CB00FE3236 /* CountdownTimerViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -209,6 +214,7 @@
 				92195BDA2CCF8BEB00A88C4E /* Schedule */,
 				92195BDB2CCF8C7F00A88C4E /* GameCardCarousel */,
 				92E81A1D2CCBC011000C40FE /* ResizableAsyncImageView.swift */,
+				920B4A472CD7487800FE3236 /* CountdownTimerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -478,6 +484,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				920B4A482CD7487800FE3236 /* CountdownTimerView.swift in Sources */,
+				920B4A4A2CD754CB00FE3236 /* CountdownTimerViewModel.swift in Sources */,
 				925C7B332CCA499100A0B426 /* V.swift in Sources */,
 				925C7B032CCA480200A0B426 /* HomeScreen.swift in Sources */,
 				92E81A232CCBE2F3000C40FE /* HomeTabBarView.swift in Sources */,

@@ -98,7 +98,14 @@ struct GameCardView: View {
                 
                 Spacer()
                 
-                VStack {
+                VStack(spacing: 0) {
+                    if let gameDate = schedule.gametime.toDateFromISO8601() {
+                        HStack {
+                            CountdownTimerView(gameDate: gameDate)
+                                .padding(.bottom)
+                            Spacer()
+                        }
+                    }
                     if let url = schedule.buy_ticket_url, url.isEmpty {
                         Button(action: {
                             
@@ -117,9 +124,9 @@ struct GameCardView: View {
                         .frame(maxWidth: .infinity)
                         .background(.white)
                         .clipShape(.rect(cornerRadius: 30))
-                        .padding(.horizontal)
                     }
                 }
+                .padding(.horizontal)
                 .padding(.bottom)
             }
         }

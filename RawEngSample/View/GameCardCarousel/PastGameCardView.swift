@@ -81,6 +81,7 @@ struct PastGameCardView: View {
                 .clipShape(.rect(cornerRadius: 30))
                 .padding(.horizontal)
             }
+            .foregroundColor(.white)
             .padding(.bottom)
         }
     }

@@ -19,43 +19,27 @@ final class HomeScreenViewModelTests: XCTestCase {
     override func tearDownWithError() throws {
         viewModel = nil
     }
-
-    func test_Deinit_isCalled() throws {
+    
+    func test_setup_runsOnlyOnce() {
+        // given
+        guard let vm = self.viewModel else {
+            XCTFail()
+            return
+        }
+        
+        // when
+        vm.setup()
+        
+        // then
+        //XCTAssertTrue()
+    }
+    
+    func test_deinit_isCalled() throws {
         // given
         
         
         // when
         //self.viewModel = nil
-        
-        // then
-        //XCTAssertNil(vm)
-    }
-    
-    func testSetupSubscription() throws {
-        // given
-        guard let vm = self.viewModel else {
-            XCTFail()
-            return
-        }
-        vm.setup()
-        
-        // when
-        vm.setup()
-        
-        // then
-        //XCTAssertNil(vm)
-    }
-    
-    func testReceiveNotification() throws {
-        // given
-        guard let vm = self.viewModel else {
-            XCTFail()
-            return
-        }
-        vm.setup()
-        
-        // when
-        NotificationCenter.default.post(name: .teamsDidUpdate, object: nil)
         
         // then
         //XCTAssertNil(vm)
