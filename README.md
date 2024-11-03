@@ -5,7 +5,7 @@
 ## Sample Project 
 
 - MVVM
-- 70%+ Test coverage
+- 70%+ Test coverage (to do)
 - SOLID
 - DI
-- Proper comments
+- Proper comments (to do)
