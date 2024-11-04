@@ -1,0 +1,38 @@
+{
+    "data": {
+        "teams": [
+            {
+                "uid": "dfe4f5a5c5401b9ed01b68045c2",
+                "year": 2023,
+                "league_id": "00",
+                "season_id": "02",
+                "ist_group": "East Group B",
+                "tid": "1610612764",
+                "tn": "Wizards",
+                "ta": "WAS",
+                "tc": "Washington",
+                "di": "Southeast",
+                "co": "East",
+                "sta": "DC",
+                "logo": "https://images.contentstack.io/v3/assets/bltf0f8f301b0c60428/bltf48fd9b4465078e5/636ccf09796f9a184cc02257/download",
+                "color": "E31837"
+            },
+            {
+                "uid": "dfe80a2793dc34288fbb88c4701",
+                "year": 2023,
+                "league_id": "00",
+                "season_id": "02",
+                "ist_group": "East Group B",
+                "tid": "1610612748",
+                "tn": "Heat",
+                "ta": "MIA",
+                "tc": "Miami",
+                "di": "Southeast",
+                "co": "East",
+                "sta": "FL",
+                "logo": "https://images.contentstack.io/v3/assets/bltf0f8f301b0c60428/blt064349feb49d5574/636ccef3e7ed9210982321a0/download",
+                "color": "98002E"
+            }
+        ]
+    }
+}

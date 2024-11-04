@@ -17,7 +17,9 @@ protocol ScheduleServiceProtocol: AnyObject {
 class ScheduleService:  ScheduleServiceProtocol {
     
     static let shared: ScheduleService = ScheduleService()
-    private var networkManager: NetworkManagerProtocol = NetworkManager()
+    
+    private var networkManager: NetworkManagerProtocol
+    private let urlProvider: URLProviderProtocol
     
     private(set) var schedules: [Schedule] = [] {
         didSet {
@@ -27,7 +29,9 @@ class ScheduleService:  ScheduleServiceProtocol {
     
     private var subscribers: [UUID: () -> Void] = [:]
     
-    init() {
+    private init(networkManager: NetworkManagerProtocol = NetworkManager(), urlProvider: URLProviderProtocol = DefaultURLProvider()) {
+        self.networkManager = networkManager
+        self.urlProvider = urlProvider
         Task { [weak self] in
             await self?.setup()
         }
@@ -61,18 +65,16 @@ class ScheduleService:  ScheduleServiceProtocol {
     }
     
     private func getSchedules() async -> [Schedule] {
-        guard let url = Bundle.main.url(forResource: "Schedule", withExtension: "json") else {
+        guard let url = urlProvider.endpoint(for: .schedule) else { return [] }
+        
+        let result: Result<ScheduleResponse, NetworkManagerError> = await networkManager.getModel(from: url)
+        
+        switch result {
+        case .success(let schdeuleResponse):
+            return schdeuleResponse.data.schedules
+        case .failure(_):
             return []
         }
-        
-        do {
-            let response: ScheduleResponse = try await networkManager.getModel(from: url)
-            return response.data?.schedules ?? []
-        } catch {
-            print(error)
-        }
-        
-        return []
     }
     
     private func sortSchedules(_ schedules: [Schedule]) -> [Schedule] {

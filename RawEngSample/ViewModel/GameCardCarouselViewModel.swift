@@ -11,6 +11,7 @@ import Foundation
     private let teamService: TeamServiceProtocol
     private let scheduleSerivce: ScheduleServiceProtocol
     private let networkManager: NetworkManagerProtocol
+    private let urlProvider: URLProviderProtocol
     
     private let id: UUID = UUID()
     private var isSetupDone: Bool = false
@@ -33,10 +34,11 @@ import Foundation
         case promotion(Int)
     }
     
-    init(teamService: TeamServiceProtocol = TeamService.shared, scheduleService: ScheduleServiceProtocol = ScheduleService.shared, networkManager: NetworkManagerProtocol = NetworkManager()) {
+    init(teamService: TeamServiceProtocol = TeamService.shared, scheduleService: ScheduleServiceProtocol = ScheduleService.shared, networkManager: NetworkManagerProtocol = NetworkManager(), urlProvider: URLProviderProtocol = DefaultURLProvider()) {
         self.teamService = teamService
         self.scheduleSerivce = scheduleService
         self.networkManager = networkManager
+        self.urlProvider = urlProvider
     }
     
     deinit {
@@ -48,8 +50,9 @@ import Foundation
         guard !isSetupDone else { return }
         
         setupSubscription()
-        await setupProperties()
-        
+        if let gameCardData = await getGameCardData() {
+            setupProperties(data: gameCardData)
+        }
         isSetupDone = true
     }
     
@@ -61,31 +64,30 @@ import Foundation
         }
     }
     
-    private func setupProperties() async {
-        let gameCardData = await getGameCardData()
-        
-        if let data = gameCardData {
-            self.gameCardData = data
-            self.setupCards()
-            self.foucsCard = data.game_card_config.focus_card
-        }
+    private func setupProperties(data: GameCardData) {
+        self.gameCardData = data
+        self.setupCards()
+        self.foucsCard = data.game_card_config.focus_card
     }
     
     private func getGameCardData() async ->  GameCardData? {
-        guard let url = Bundle.main.url(forResource: "Game Card Data", withExtension: "json") else { return nil }
+        guard let url = urlProvider.endpoint(for: .gameCardData) else { return nil }
         
-        do {
-            let gameCardResponse: GameCardResponse = try await networkManager.getModel(from: url)
+        let result: Result<GameCardResponse, NetworkManagerError> = await networkManager.getModel(from: url)
+        
+        switch result {
+        case .success(let gameCardResponse):
             return gameCardResponse.data
-        } catch {
-            print(error)
+        case .failure(_):
+            return nil
         }
-        return nil
     }
     
     private func setupCards() {
         setupPastGames()
         setupUpcomingGameAndFutureGames()
+        
+        var cardSequence: [GameCard] = []
         
         for game in pastGames {
             cardSequence.append(.past(game))
@@ -98,9 +100,8 @@ import Foundation
         for game in futureGames {
             cardSequence.append(.future(game))
         }
-        
+
         let sortedPromoCards =  gameCardData?.promotion_cards.sorted { $0.position < $1.position }
-        
         for promotionCard in sortedPromoCards ?? [] {
             let index = promotionCard.position - 1
             
@@ -110,6 +111,8 @@ import Foundation
                 cardSequence.append(.promotion(index))
             }
         }
+        
+        self.cardSequence = cardSequence
     }
     
     private func setupUpcomingGameAndFutureGames() {
@@ -146,7 +149,6 @@ import Foundation
         futureGames = []
         upcomingGame = nil
         pastGames = []
-        cardSequence = []
     }
 }
 

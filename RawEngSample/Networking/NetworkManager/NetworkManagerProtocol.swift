@@ -8,6 +8,6 @@
 import Foundation
 
 protocol NetworkManagerProtocol: AnyObject {
-    func getModel<T: Decodable>(from url: URL) async throws -> T
-    func getData(from url: URL) async throws -> Data
+    func getData(from url: URL) async -> Result<Data, NetworkManagerError>
+    func getModel<T: Decodable>(from url: URL) async -> Result<T, NetworkManagerError>
 }

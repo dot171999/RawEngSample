@@ -13,23 +13,28 @@ protocol TeamServiceProtocol: AnyObject {
     func refresh() async
     func myTeamName() -> String
     func isMyTeamPlayingAtHome(_ schedule: Schedule) -> Bool
-    func getIconDataForTeam(_ tid: String) async throws -> Data?
+    func getIconDataForTeam(_ tid: String) async -> Data?
 }
 
 class TeamService: TeamServiceProtocol {
     
     static let shared: TeamService = TeamService()
     private let _myTeamId: String = "1610612748"
-    private let networkManager: NetworkManagerProtocol = NetworkManager()
+    
+    private let networkManager: NetworkManagerProtocol
+    private let urlProvider: URLProviderProtocol
+    
     private var teams: [Team] = [] {
         didSet {
-            NotificationCenter.default.post(name: .teamsDidUpdate, object: nil)
             notifySubscribers()
         }
     }
     private var subscribers: [UUID: () -> Void] = [:]
     
-    private init() {
+    private init(networkManager: NetworkManagerProtocol = NetworkManager(), urlProvider: URLProviderProtocol = DefaultURLProvider()) {
+        self.networkManager = networkManager
+        self.urlProvider = urlProvider
+        
         Task { [weak self] in
             await self?.setup()
         }
@@ -40,7 +45,6 @@ class TeamService: TeamServiceProtocol {
         await MainActor.run { [weak self] in
             self?.teams = teams
         }
-        
     }
     
     func refresh() async {
@@ -62,23 +66,29 @@ class TeamService: TeamServiceProtocol {
     }
     
     private func getTeams() async -> [Team] {
-        guard let url = Bundle.main.url(forResource: "teams", withExtension: "json") else { return [] }
+        guard let url = urlProvider.endpoint(for: .teams) else { return [] }
         
-        do {
-            let teamResponse: TeamsResponse = try await networkManager.getModel(from: url)
+        let result: Result<TeamsResponse, NetworkManagerError> = await networkManager.getModel(from: url)
+        
+        switch result {
+        case .success(let teamResponse):
             return teamResponse.data.teams
-            
-        } catch {
-            print(error)
+        case .failure(_):
+            return []
         }
-        
-        return []
     }
     
-    func getIconDataForTeam(_ tid: String) async throws -> Data? {
+    func getIconDataForTeam(_ tid: String) async -> Data? {
         guard let urlString = iconUrlStringForTeamId(tid), let url = URL(string: urlString) else { return nil }
         
-        return try await networkManager.getData(from: url)
+        let result = await networkManager.getData(from: url)
+        
+        switch result {
+        case .success(let data):
+            return data
+        case .failure(_):
+            return nil
+        }
     }
     
     func isMyTeamPlayingAtHome(_ schedule: Schedule) -> Bool {

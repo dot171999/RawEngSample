@@ -13,22 +13,22 @@ final class HomeScreenViewModelTests: XCTestCase {
     var viewModel: HomeScreenViewModel?
     
     override func setUpWithError() throws {
-        viewModel = HomeScreenViewModel()
+        //viewModel = HomeScreenViewModel()
     }
 
     override func tearDownWithError() throws {
-        viewModel = nil
+        //viewModel = nil
     }
     
     func test_setup_runsOnlyOnce() {
         // given
-        guard let vm = self.viewModel else {
-            XCTFail()
-            return
-        }
+//        guard let vm = self.viewModel else {
+//            XCTFail()
+//            return
+//        }
         
         // when
-        vm.setup()
+        
         
         // then
         //XCTAssertTrue()

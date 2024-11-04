@@ -1,0 +1,132 @@
+{
+    "data": {
+        "schedules": [
+            {
+                "uid": "dfe540e9484b2b2e7fa4f0f226d",
+                "year": 2023,
+                "league_id": "00",
+                "season_id": "02",
+                "gid": "0042300102",
+                "gcode": "20240424/MIABOS",
+                "seri": "Series tied 1-1",
+                "is_game_necessary": "1",
+                "gametime": "2024-11-05T15:30:00.000Z",
+                "cl": "00:00.0",
+                "arena_name": "TD Garden",
+                "arena_city": "Boston",
+                "arena_state": "MA",
+                "st": 1,
+                "stt": "Mock game",
+                "ppdst": "I",
+                "buy_ticket": "",
+                "buy_ticket_url": "",
+                "logo_url": null,
+                "hide": false,
+                "game_state": "active",
+                "game_subtype": null,
+                "h": {
+                    "tid": "1610612738",
+                    "re": "1-1",
+                    "ta": "BOS",
+                    "tn": "Celtics",
+                    "tc": "Boston",
+                    "s": "101",
+                    "ist_group": null
+                },
+                "v": {
+                    "tid": "1610612748",
+                    "re": "1-1",
+                    "ta": "MIA",
+                    "tn": "Heat",
+                    "tc": "Miami",
+                    "s": "111",
+                    "ist_group": null
+                }
+            },
+            {
+                "uid": "dfe368aef86f3d95a60c10b07be",
+                "year": 2023,
+                "league_id": "00",
+                "season_id": "02",
+                "gid": "0022301068",
+                "gcode": "20240329/PORMIA",
+                "seri": "",
+                "is_game_necessary": "1",
+                "gametime": "2024-10-28T06:14:14.705Z",
+                "cl": "00:00.0",
+                "arena_name": "Kaseya Center",
+                "arena_city": "Miami",
+                "arena_state": "FL",
+                "st": 2,
+                "stt": "Halftime",
+                "ppdst": "I",
+                "buy_ticket": null,
+                "buy_ticket_url": null,
+                "logo_url": null,
+                "hide": false,
+                "game_state": "active",
+                "game_subtype": null,
+                "h": {
+                    "tid": "1610612748",
+                    "re": "40-33",
+                    "ta": "MIA",
+                    "tn": "Heat",
+                    "tc": "Miami",
+                    "s": "74",
+                    "ist_group": null
+                },
+                "v": {
+                    "tid": "1610612757",
+                    "re": "19-55",
+                    "ta": "POR",
+                    "tn": "Trail Blazers",
+                    "tc": "Portland",
+                    "s": "40",
+                    "ist_group": null
+                }
+            },
+            {
+                "uid": "dfeb47367b57a5dca3e7d5f28ac",
+                "year": 2023,
+                "league_id": "00",
+                "season_id": "02",
+                "gid": "0022301189",
+                "gcode": "20240414/TORMIA",
+                "seri": "",
+                "is_game_necessary": "1",
+                "gametime": "2024-04-14T17:00:00.000Z",
+                "cl": "00:00.0",
+                "arena_name": "Kaseya Center",
+                "arena_city": "Miami",
+                "arena_state": "FL",
+                "st": 3,
+                "stt": "Final",
+                "ppdst": "I",
+                "buy_ticket": "",
+                "buy_ticket_url": "https://www.google.com/",
+                "logo_url": null,
+                "hide": false,
+                "game_state": "active",
+                "game_subtype": null,
+                "h": {
+                    "tid": "1610612748",
+                    "re": "46-36",
+                    "ta": "MIA",
+                    "tn": "Heat",
+                    "tc": "Miami",
+                    "s": "118",
+                    "ist_group": null
+                },
+                "v": {
+                    "tid": "1610612761",
+                    "re": "25-57",
+                    "ta": "TOR",
+                    "tn": "Raptors",
+                    "tc": "Toronto",
+                    "s": "103",
+                    "ist_group": null
+                }
+            }
+        ]
+    }
+}

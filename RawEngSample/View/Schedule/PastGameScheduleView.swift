@@ -72,7 +72,7 @@ struct PastGameScheduleView: View {
     
     let response = try! decoder.decode(ScheduleResponse.self, from: data)
     
-    schedules = response.data!.schedules!
+    schedules = response.data.schedules
     
     return PastGameScheduleView(for: schedules.first { schedule in
         schedule.st! == 3

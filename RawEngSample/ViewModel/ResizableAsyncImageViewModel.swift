@@ -16,13 +16,9 @@ import Foundation
     }
     
     func imageDataFor(_ tid: String) async {
-        do {
-            let data = try await teamService.getIconDataForTeam(tid)
-            await MainActor.run { [weak self] in
-                self?.imageData = data
-            }
-        } catch {
-            print("error: ", error)
+        let data = await teamService.getIconDataForTeam(tid)
+        await MainActor.run { [weak self] in
+            self?.imageData = data
         }
     }
 }

@@ -16,10 +16,11 @@
 		92195BDF2CCF8D0400A88C4E /* GameCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92195BDE2CCF8D0400A88C4E /* GameCardView.swift */; };
 		92204E7F2CD0F5D000A3E942 /* HomeScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92204E7E2CD0F5D000A3E942 /* HomeScreenViewModel.swift */; };
 		92204E812CD0F63B00A3E942 /* ScheduleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92204E802CD0F63B00A3E942 /* ScheduleService.swift */; };
-		92204E832CD13DA900A3E942 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92204E822CD13DA900A3E942 /* Notification.swift */; };
 		922A481B2CCE1CFA004E3B02 /* GameCardCarouselViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922A481A2CCE1CFA004E3B02 /* GameCardCarouselViewModel.swift */; };
 		922A481E2CCE3ECA004E3B02 /* GameCardResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922A481D2CCE3ECA004E3B02 /* GameCardResponse.swift */; };
 		922A48202CCEC0FA004E3B02 /* PromoCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922A481F2CCEC0FA004E3B02 /* PromoCardView.swift */; };
+		9241F7C42CD778FA00D65622 /* ScheduleViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9241F7C32CD778FA00D65622 /* ScheduleViewModelTests.swift */; };
+		9241F7C62CD7821800D65622 /* APIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9241F7C52CD7821800D65622 /* APIEndpoint.swift */; };
 		92498E602CCA5180008DFF44 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92498E5F2CCA5180008DFF44 /* Team.swift */; };
 		92498E622CCA78CE008DFF44 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92498E612CCA78CE008DFF44 /* TestView.swift */; };
 		92498E672CCB977A008DFF44 /* TeamsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92498E662CCB977A008DFF44 /* TeamsResponse.swift */; };
@@ -35,12 +36,19 @@
 		925C7B322CCA499100A0B426 /* ScheduleResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925C7B2D2CCA499100A0B426 /* ScheduleResponse.swift */; };
 		925C7B332CCA499100A0B426 /* V.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925C7B2E2CCA499100A0B426 /* V.swift */; };
 		925C7B342CCA499100A0B426 /* H.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925C7B2F2CCA499100A0B426 /* H.swift */; };
-		925C7B392CCA4A3A00A0B426 /* teams.json in Resources */ = {isa = PBXBuildFile; fileRef = 925C7B362CCA4A3A00A0B426 /* teams.json */; };
+		925C7B392CCA4A3A00A0B426 /* Teams.json in Resources */ = {isa = PBXBuildFile; fileRef = 925C7B362CCA4A3A00A0B426 /* Teams.json */; };
 		925C7B3A2CCA4A3A00A0B426 /* Schedule.json in Resources */ = {isa = PBXBuildFile; fileRef = 925C7B372CCA4A3A00A0B426 /* Schedule.json */; };
-		925C7B3B2CCA4A3A00A0B426 /* Game Card Data.json in Resources */ = {isa = PBXBuildFile; fileRef = 925C7B382CCA4A3A00A0B426 /* Game Card Data.json */; };
+		925C7B3B2CCA4A3A00A0B426 /* Game_Card_Data.json in Resources */ = {isa = PBXBuildFile; fileRef = 925C7B382CCA4A3A00A0B426 /* Game_Card_Data.json */; };
 		9294D34D2CD2667000F317C0 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9294D34C2CD2667000F317C0 /* NetworkManager.swift */; };
 		9294D34F2CD27A4200F317C0 /* ResizableAsyncImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9294D34E2CD27A4200F317C0 /* ResizableAsyncImageViewModel.swift */; };
 		9294D3512CD298BB00F317C0 /* NetworkManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9294D3502CD298BB00F317C0 /* NetworkManagerProtocol.swift */; };
+		929795E52CD7F7E400DFF20F /* Mock_Game_Card_Data.json in Resources */ = {isa = PBXBuildFile; fileRef = 929795E22CD7F7E400DFF20F /* Mock_Game_Card_Data.json */; };
+		929795E62CD7F7E400DFF20F /* Mock_Teams.json in Resources */ = {isa = PBXBuildFile; fileRef = 929795E32CD7F7E400DFF20F /* Mock_Teams.json */; };
+		929795E72CD7F7E400DFF20F /* Mock_Schedule.json in Resources */ = {isa = PBXBuildFile; fileRef = 929795E42CD7F7E400DFF20F /* Mock_Schedule.json */; };
+		929795E92CD7FAE700DFF20F /* MockURLProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929795E82CD7FAE700DFF20F /* MockURLProvider.swift */; };
+		929795EB2CD8B29500DFF20F /* TeamServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929795EA2CD8B29500DFF20F /* TeamServiceTests.swift */; };
+		929795EF2CD8D75E00DFF20F /* DefaultURLProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929795EE2CD8D75E00DFF20F /* DefaultURLProvider.swift */; };
+		929795F22CD8D7F400DFF20F /* NetworkManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929795F12CD8D7F400DFF20F /* NetworkManagerError.swift */; };
 		92C446E52CCCD6890071CD13 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C446E42CCCD6890071CD13 /* Array.swift */; };
 		92E819DA2CCBB8D0000C40FE /* FutureGameScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E819D92CCBB8D0000C40FE /* FutureGameScheduleView.swift */; };
 		92E819DC2CCBB8DF000C40FE /* LiveGameScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E819DB2CCBB8DF000C40FE /* LiveGameScheduleView.swift */; };
@@ -81,10 +89,11 @@
 		92195BDE2CCF8D0400A88C4E /* GameCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCardView.swift; sourceTree = "<group>"; };
 		92204E7E2CD0F5D000A3E942 /* HomeScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenViewModel.swift; sourceTree = "<group>"; };
 		92204E802CD0F63B00A3E942 /* ScheduleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleService.swift; sourceTree = "<group>"; };
-		92204E822CD13DA900A3E942 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		922A481A2CCE1CFA004E3B02 /* GameCardCarouselViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCardCarouselViewModel.swift; sourceTree = "<group>"; };
 		922A481D2CCE3ECA004E3B02 /* GameCardResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCardResponse.swift; sourceTree = "<group>"; };
 		922A481F2CCEC0FA004E3B02 /* PromoCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoCardView.swift; sourceTree = "<group>"; };
+		9241F7C32CD778FA00D65622 /* ScheduleViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModelTests.swift; sourceTree = "<group>"; };
+		9241F7C52CD7821800D65622 /* APIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
 		92498E5F2CCA5180008DFF44 /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
 		92498E612CCA78CE008DFF44 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		92498E662CCB977A008DFF44 /* TeamsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsResponse.swift; sourceTree = "<group>"; };
@@ -102,12 +111,19 @@
 		925C7B2D2CCA499100A0B426 /* ScheduleResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleResponse.swift; sourceTree = "<group>"; };
 		925C7B2E2CCA499100A0B426 /* V.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = V.swift; sourceTree = "<group>"; };
 		925C7B2F2CCA499100A0B426 /* H.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = H.swift; sourceTree = "<group>"; };
-		925C7B362CCA4A3A00A0B426 /* teams.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = teams.json; sourceTree = "<group>"; };
+		925C7B362CCA4A3A00A0B426 /* Teams.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Teams.json; sourceTree = "<group>"; };
 		925C7B372CCA4A3A00A0B426 /* Schedule.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Schedule.json; sourceTree = "<group>"; };
-		925C7B382CCA4A3A00A0B426 /* Game Card Data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Game Card Data.json"; sourceTree = "<group>"; };
+		925C7B382CCA4A3A00A0B426 /* Game_Card_Data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Game_Card_Data.json; sourceTree = "<group>"; };
 		9294D34C2CD2667000F317C0 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		9294D34E2CD27A4200F317C0 /* ResizableAsyncImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizableAsyncImageViewModel.swift; sourceTree = "<group>"; };
 		9294D3502CD298BB00F317C0 /* NetworkManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerProtocol.swift; sourceTree = "<group>"; };
+		929795E22CD7F7E400DFF20F /* Mock_Game_Card_Data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Mock_Game_Card_Data.json; sourceTree = "<group>"; };
+		929795E32CD7F7E400DFF20F /* Mock_Teams.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Mock_Teams.json; sourceTree = "<group>"; };
+		929795E42CD7F7E400DFF20F /* Mock_Schedule.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Mock_Schedule.json; sourceTree = "<group>"; };
+		929795E82CD7FAE700DFF20F /* MockURLProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProvider.swift; sourceTree = "<group>"; };
+		929795EA2CD8B29500DFF20F /* TeamServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamServiceTests.swift; sourceTree = "<group>"; };
+		929795EE2CD8D75E00DFF20F /* DefaultURLProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultURLProvider.swift; sourceTree = "<group>"; };
+		929795F12CD8D7F400DFF20F /* NetworkManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerError.swift; sourceTree = "<group>"; };
 		92C446E42CCCD6890071CD13 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		92E819D92CCBB8D0000C40FE /* FutureGameScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FutureGameScheduleView.swift; sourceTree = "<group>"; };
 		92E819DB2CCBB8DF000C40FE /* LiveGameScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveGameScheduleView.swift; sourceTree = "<group>"; };
@@ -149,7 +165,6 @@
 			isa = PBXGroup;
 			children = (
 				92C446E42CCCD6890071CD13 /* Array.swift */,
-				92204E822CD13DA900A3E942 /* Notification.swift */,
 				92E81A1F2CCBC68A000C40FE /* String.swift */,
 			);
 			path = Extensions;
@@ -191,6 +206,7 @@
 				92195BDE2CCF8D0400A88C4E /* GameCardView.swift */,
 				92195BDC2CCF8CC000A88C4E /* PastGameCardView.swift */,
 				922A481F2CCEC0FA004E3B02 /* PromoCardView.swift */,
+				920B4A472CD7487800FE3236 /* CountdownTimerView.swift */,
 			);
 			path = GameCardCarousel;
 			sourceTree = "<group>";
@@ -214,7 +230,6 @@
 				92195BDA2CCF8BEB00A88C4E /* Schedule */,
 				92195BDB2CCF8C7F00A88C4E /* GameCardCarousel */,
 				92E81A1D2CCBC011000C40FE /* ResizableAsyncImageView.swift */,
-				920B4A472CD7487800FE3236 /* CountdownTimerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -225,6 +240,16 @@
 				922A481D2CCE3ECA004E3B02 /* GameCardResponse.swift */,
 			);
 			path = GameCard;
+			sourceTree = "<group>";
+		};
+		9241F7C72CD7E99300D65622 /* Mock_Json_payloads */ = {
+			isa = PBXGroup;
+			children = (
+				929795E32CD7F7E400DFF20F /* Mock_Teams.json */,
+				929795E42CD7F7E400DFF20F /* Mock_Schedule.json */,
+				929795E22CD7F7E400DFF20F /* Mock_Game_Card_Data.json */,
+			);
+			path = Mock_Json_payloads;
 			sourceTree = "<group>";
 		};
 		92498E632CCB96A1008DFF44 /* Schedule */ = {
@@ -279,7 +304,7 @@
 				92206AAC2CCBB5B900C5CF31 /* View */,
 				92206AAB2CCBB5B100C5CF31 /* ViewModel */,
 				920B4A352CD4ACDC00FE3236 /* Extensions */,
-				925C7B352CCA49FC00A0B426 /* Json_payloads */,
+				925C7B352CCA49FC00A0B426 /* Json_Payloads */,
 				92498E612CCA78CE008DFF44 /* TestView.swift */,
 				925C7B042CCA480400A0B426 /* Assets.xcassets */,
 				925C7B062CCA480400A0B426 /* Preview Content */,
@@ -298,8 +323,11 @@
 		925C7B102CCA480500A0B426 /* RawEngSampleTests */ = {
 			isa = PBXGroup;
 			children = (
+				929795EC2CD8B32500DFF20F /* Mock */,
 				925C7B112CCA480500A0B426 /* RawEngSampleTests.swift */,
+				929795EA2CD8B29500DFF20F /* TeamServiceTests.swift */,
 				920B4A362CD4AE0400FE3236 /* HomeScreenViewModelTests.swift */,
+				9241F7C32CD778FA00D65622 /* ScheduleViewModelTests.swift */,
 			);
 			path = RawEngSampleTests;
 			sourceTree = "<group>";
@@ -314,23 +342,51 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		925C7B352CCA49FC00A0B426 /* Json_payloads */ = {
+		925C7B352CCA49FC00A0B426 /* Json_Payloads */ = {
 			isa = PBXGroup;
 			children = (
-				925C7B362CCA4A3A00A0B426 /* teams.json */,
+				925C7B362CCA4A3A00A0B426 /* Teams.json */,
 				925C7B372CCA4A3A00A0B426 /* Schedule.json */,
-				925C7B382CCA4A3A00A0B426 /* Game Card Data.json */,
+				925C7B382CCA4A3A00A0B426 /* Game_Card_Data.json */,
 			);
-			path = Json_payloads;
+			path = Json_Payloads;
 			sourceTree = "<group>";
 		};
 		9294D34B2CD2665900F317C0 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				9294D3502CD298BB00F317C0 /* NetworkManagerProtocol.swift */,
-				9294D34C2CD2667000F317C0 /* NetworkManager.swift */,
+				929795ED2CD8D73100DFF20F /* API */,
+				929795F02CD8D7C600DFF20F /* NetworkManager */,
+				929795EE2CD8D75E00DFF20F /* DefaultURLProvider.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		929795EC2CD8B32500DFF20F /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				929795E82CD7FAE700DFF20F /* MockURLProvider.swift */,
+				9241F7C72CD7E99300D65622 /* Mock_Json_payloads */,
+			);
+			path = Mock;
+			sourceTree = "<group>";
+		};
+		929795ED2CD8D73100DFF20F /* API */ = {
+			isa = PBXGroup;
+			children = (
+				9241F7C52CD7821800D65622 /* APIEndpoint.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		929795F02CD8D7C600DFF20F /* NetworkManager */ = {
+			isa = PBXGroup;
+			children = (
+				9294D3502CD298BB00F317C0 /* NetworkManagerProtocol.swift */,
+				9294D34C2CD2667000F317C0 /* NetworkManager.swift */,
+				929795F12CD8D7F400DFF20F /* NetworkManagerError.swift */,
+			);
+			path = NetworkManager;
 			sourceTree = "<group>";
 		};
 		92E819DF2CCBBBE4000C40FE /* Service */ = {
@@ -453,11 +509,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				925C7B392CCA4A3A00A0B426 /* teams.json in Resources */,
+				925C7B392CCA4A3A00A0B426 /* Teams.json in Resources */,
 				925C7B082CCA480400A0B426 /* Preview Assets.xcassets in Resources */,
 				925C7B3A2CCA4A3A00A0B426 /* Schedule.json in Resources */,
 				925C7B052CCA480400A0B426 /* Assets.xcassets in Resources */,
-				925C7B3B2CCA4A3A00A0B426 /* Game Card Data.json in Resources */,
+				925C7B3B2CCA4A3A00A0B426 /* Game_Card_Data.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -465,6 +521,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				929795E72CD7F7E400DFF20F /* Mock_Schedule.json in Resources */,
+				929795E62CD7F7E400DFF20F /* Mock_Teams.json in Resources */,
+				929795E52CD7F7E400DFF20F /* Mock_Game_Card_Data.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,6 +549,7 @@
 				925C7B032CCA480200A0B426 /* HomeScreen.swift in Sources */,
 				92E81A232CCBE2F3000C40FE /* HomeTabBarView.swift in Sources */,
 				92E819DC2CCBB8DF000C40FE /* LiveGameScheduleView.swift in Sources */,
+				929795EF2CD8D75E00DFF20F /* DefaultURLProvider.swift in Sources */,
 				922A481E2CCE3ECA004E3B02 /* GameCardResponse.swift in Sources */,
 				92498E622CCA78CE008DFF44 /* TestView.swift in Sources */,
 				92C446E52CCCD6890071CD13 /* Array.swift in Sources */,
@@ -497,12 +557,14 @@
 				92E819E12CCBBC04000C40FE /* TeamService.swift in Sources */,
 				92204E812CD0F63B00A3E942 /* ScheduleService.swift in Sources */,
 				92204E7F2CD0F5D000A3E942 /* HomeScreenViewModel.swift in Sources */,
+				929795F22CD8D7F400DFF20F /* NetworkManagerError.swift in Sources */,
 				92498E672CCB977A008DFF44 /* TeamsResponse.swift in Sources */,
 				92195BDF2CCF8D0400A88C4E /* GameCardView.swift in Sources */,
 				922A481B2CCE1CFA004E3B02 /* GameCardCarouselViewModel.swift in Sources */,
 				92E819DA2CCBB8D0000C40FE /* FutureGameScheduleView.swift in Sources */,
 				925C7B302CCA499100A0B426 /* ScheduleData.swift in Sources */,
 				925C7B312CCA499100A0B426 /* Schedule.swift in Sources */,
+				9241F7C62CD7821800D65622 /* APIEndpoint.swift in Sources */,
 				92498E602CCA5180008DFF44 /* Team.swift in Sources */,
 				9294D34D2CD2667000F317C0 /* NetworkManager.swift in Sources */,
 				925C7B322CCA499100A0B426 /* ScheduleResponse.swift in Sources */,
@@ -517,7 +579,6 @@
 				92E81A272CCBED10000C40FE /* ScheduleView.swift in Sources */,
 				92498E692CCB978F008DFF44 /* TeamsData.swift in Sources */,
 				92E819DE2CCBB8EF000C40FE /* PastGameScheduleView.swift in Sources */,
-				92204E832CD13DA900A3E942 /* Notification.swift in Sources */,
 				925C7B342CCA499100A0B426 /* H.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -527,6 +588,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				925C7B122CCA480500A0B426 /* RawEngSampleTests.swift in Sources */,
+				929795E92CD7FAE700DFF20F /* MockURLProvider.swift in Sources */,
+				9241F7C42CD778FA00D65622 /* ScheduleViewModelTests.swift in Sources */,
+				929795EB2CD8B29500DFF20F /* TeamServiceTests.swift in Sources */,
 				920B4A372CD4AE0400FE3236 /* HomeScreenViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
