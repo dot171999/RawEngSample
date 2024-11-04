@@ -49,6 +49,8 @@
 		929795EB2CD8B29500DFF20F /* TeamServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929795EA2CD8B29500DFF20F /* TeamServiceTests.swift */; };
 		929795EF2CD8D75E00DFF20F /* DefaultURLProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929795EE2CD8D75E00DFF20F /* DefaultURLProvider.swift */; };
 		929795F22CD8D7F400DFF20F /* NetworkManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929795F12CD8D7F400DFF20F /* NetworkManagerError.swift */; };
+		92C2C67C2CD8DCBD009944F8 /* NetworkManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C2C67B2CD8DCBD009944F8 /* NetworkManagerTests.swift */; };
+		92C2C6802CD8F7C0009944F8 /* CountdownTimerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C2C67F2CD8F7C0009944F8 /* CountdownTimerViewModelTests.swift */; };
 		92C446E52CCCD6890071CD13 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C446E42CCCD6890071CD13 /* Array.swift */; };
 		92E819DA2CCBB8D0000C40FE /* FutureGameScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E819D92CCBB8D0000C40FE /* FutureGameScheduleView.swift */; };
 		92E819DC2CCBB8DF000C40FE /* LiveGameScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E819DB2CCBB8DF000C40FE /* LiveGameScheduleView.swift */; };
@@ -94,6 +96,7 @@
 		922A481F2CCEC0FA004E3B02 /* PromoCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoCardView.swift; sourceTree = "<group>"; };
 		9241F7C32CD778FA00D65622 /* ScheduleViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModelTests.swift; sourceTree = "<group>"; };
 		9241F7C52CD7821800D65622 /* APIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
+		92456F7C2CD913DE00E31632 /* RawEngSample.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = RawEngSample.xctestplan; sourceTree = "<group>"; };
 		92498E5F2CCA5180008DFF44 /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
 		92498E612CCA78CE008DFF44 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		92498E662CCB977A008DFF44 /* TeamsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsResponse.swift; sourceTree = "<group>"; };
@@ -124,6 +127,8 @@
 		929795EA2CD8B29500DFF20F /* TeamServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamServiceTests.swift; sourceTree = "<group>"; };
 		929795EE2CD8D75E00DFF20F /* DefaultURLProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultURLProvider.swift; sourceTree = "<group>"; };
 		929795F12CD8D7F400DFF20F /* NetworkManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerError.swift; sourceTree = "<group>"; };
+		92C2C67B2CD8DCBD009944F8 /* NetworkManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerTests.swift; sourceTree = "<group>"; };
+		92C2C67F2CD8F7C0009944F8 /* CountdownTimerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimerViewModelTests.swift; sourceTree = "<group>"; };
 		92C446E42CCCD6890071CD13 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		92E819D92CCBB8D0000C40FE /* FutureGameScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FutureGameScheduleView.swift; sourceTree = "<group>"; };
 		92E819DB2CCBB8DF000C40FE /* LiveGameScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveGameScheduleView.swift; sourceTree = "<group>"; };
@@ -280,6 +285,7 @@
 				925C7AFF2CCA480200A0B426 /* RawEngSample */,
 				925C7B102CCA480500A0B426 /* RawEngSampleTests */,
 				920B4A3D2CD4C87200FE3236 /* RawEngSampleUITests */,
+				92456F7C2CD913DE00E31632 /* RawEngSample.xctestplan */,
 				925C7AFE2CCA480200A0B426 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -325,9 +331,11 @@
 			children = (
 				929795EC2CD8B32500DFF20F /* Mock */,
 				925C7B112CCA480500A0B426 /* RawEngSampleTests.swift */,
+				92C2C67B2CD8DCBD009944F8 /* NetworkManagerTests.swift */,
 				929795EA2CD8B29500DFF20F /* TeamServiceTests.swift */,
 				920B4A362CD4AE0400FE3236 /* HomeScreenViewModelTests.swift */,
 				9241F7C32CD778FA00D65622 /* ScheduleViewModelTests.swift */,
+				92C2C67F2CD8F7C0009944F8 /* CountdownTimerViewModelTests.swift */,
 			);
 			path = RawEngSampleTests;
 			sourceTree = "<group>";
@@ -587,8 +595,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92C2C67C2CD8DCBD009944F8 /* NetworkManagerTests.swift in Sources */,
 				925C7B122CCA480500A0B426 /* RawEngSampleTests.swift in Sources */,
 				929795E92CD7FAE700DFF20F /* MockURLProvider.swift in Sources */,
+				92C2C6802CD8F7C0009944F8 /* CountdownTimerViewModelTests.swift in Sources */,
 				9241F7C42CD778FA00D65622 /* ScheduleViewModelTests.swift in Sources */,
 				929795EB2CD8B29500DFF20F /* TeamServiceTests.swift in Sources */,
 				920B4A372CD4AE0400FE3236 /* HomeScreenViewModelTests.swift in Sources */,

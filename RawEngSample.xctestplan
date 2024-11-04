@@ -1,0 +1,32 @@
+{
+  "configurations" : [
+    {
+      "id" : "60B8B304-07D1-4BEC-B5CB-B02A14911947",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:RawEngSample.xcodeproj",
+          "identifier" : "925C7AFC2CCA480200A0B426",
+          "name" : "RawEngSample"
+        }
+      ]
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:RawEngSample.xcodeproj",
+        "identifier" : "925C7B0C2CCA480500A0B426",
+        "name" : "RawEngSampleTests"
+      }
+    }
+  ],
+  "version" : 1
+}

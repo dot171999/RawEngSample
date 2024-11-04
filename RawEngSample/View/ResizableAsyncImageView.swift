@@ -33,7 +33,7 @@ struct ResizableAsyncImageView: View {
         .frame(width: size, height: size)
         .task {
             if viewModel.imageData == nil {
-                await viewModel.imageDataFor(tid)
+                await viewModel.loadImageDataFor(tid)
             }
         }
     }

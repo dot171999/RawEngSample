@@ -1,17 +1,17 @@
 //
-//  TeamServiceTests.swift
+//  NetworkManagerTests.swift
 //  RawEngSampleTests
 //
-//  Created by Aryan Sharma on 03/11/24.
+//  Created by Aryan Sharma on 04/11/24.
 //
 
 import XCTest
 @testable import RawEngSample
 
-final class TeamServiceTests: XCTestCase {
+final class NetworkManagerTests: XCTestCase {
 
     override func setUpWithError() throws {
-        //let _ = MockURLProvider()
+        
     }
 
     override func tearDownWithError() throws {

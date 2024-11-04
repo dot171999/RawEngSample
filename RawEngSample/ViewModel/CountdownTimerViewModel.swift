@@ -8,9 +8,9 @@
 import Foundation
 
 @Observable class CountdownTimerViewModel {
-    private(set) var remainingDays: String = "00"
-    private(set) var remainingHours: String = "00"
-    private(set) var remainingMinutes: String = "00"
+    private(set) var remainingDays: String = ""
+    private(set) var remainingHours: String = ""
+    private(set) var remainingMinutes: String = ""
     
     private let gameDate: Date
     private var timer: Timer?
@@ -23,30 +23,34 @@ import Foundation
     deinit {
         timer?.invalidate()
     }
-    
-    func startTimer() {
-        updateRemainingTime()
+        
+    private func startTimer() {
+       updateRemainingTime()
         timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in
             self?.updateRemainingTime()
         }
     }
     
-    func updateRemainingTime() {
+    private func updateRemainingTime() {
         let nowDate = Date()
         guard gameDate > nowDate else {
-            remainingDays = "00"
-            remainingHours = "00"
-            remainingMinutes = "00"
+            resetCountDown()
             timer?.invalidate()
             return
         }
         
         let calenderComponents: Set<Calendar.Component> = [.day, .hour, .minute]
         let timeDifference = Calendar.current.dateComponents(calenderComponents, from: nowDate, to: gameDate)
-        if let days = timeDifference.day, let hours = timeDifference.hour, let minutes = timeDifference.minute {
-            remainingDays = String(format: "%02d", days)
-            remainingHours = String(format: "%02d", hours)
-            remainingMinutes = String(format: "%02d", minutes)
-        }
+        
+        let days = timeDifference.day, hours = timeDifference.hour, minutes = timeDifference.minute
+        remainingDays = String(format: "%02d", days ?? "EE")
+        remainingHours = String(format: "%02d", hours ?? "EE")
+        remainingMinutes = String(format: "%02d", minutes ?? "EE")
+    }
+    
+    private func resetCountDown() {
+        remainingDays = "00"
+        remainingHours = "00"
+        remainingMinutes = "00"
     }
 }

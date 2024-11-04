@@ -15,7 +15,7 @@ import Foundation
         self.teamService = teamService
     }
     
-    func imageDataFor(_ tid: String) async {
+    func loadImageDataFor(_ tid: String) async {
         let data = await teamService.getIconDataForTeam(tid)
         await MainActor.run { [weak self] in
             self?.imageData = data

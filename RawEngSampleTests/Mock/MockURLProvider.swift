@@ -10,7 +10,7 @@ import Foundation
 
 struct MockURLProvider: URLProviderProtocol {
     
-    var baseURL: URL = URL(string: "")!
+    var baseURL: URL = URL(string: "www.test.com")!
     
     func endpoint(for endpoint: APIEndpoint) -> URL? {
         let _ = baseURL.appendingPathComponent(endpoint.path)

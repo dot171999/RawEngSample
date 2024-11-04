@@ -11,11 +11,11 @@ class NetworkManager: NetworkManagerProtocol {
     private let sessionTimeoutInSeconds: TimeInterval = 8
     private let session: URLSession
     
-    init() {
-        let configuration = URLSessionConfiguration.default
+    init(session: URLSession = URLSession(configuration: .default)) {
+        let configuration = session.configuration
         configuration.timeoutIntervalForRequest = sessionTimeoutInSeconds
         configuration.requestCachePolicy = .returnCacheDataElseLoad
-        session = URLSession(configuration: configuration)
+        self.session = session
     }
     
     func getData(from url: URL) async -> Result<Data, NetworkManagerError> {
