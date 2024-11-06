@@ -51,7 +51,7 @@ struct FutureGameScheduleView: View {
                     }
                 }
                 
-                if let url = schedule.buy_ticket_url, url.isEmpty {
+                if let url = schedule.buy_ticket_url, !url.isEmpty {
                     Button {
                         // Buy Ticket
                     } label: {

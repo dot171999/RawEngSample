@@ -106,7 +106,7 @@ struct GameCardView: View {
                             Spacer()
                         }
                     }
-                    if let url = schedule.buy_ticket_url, url.isEmpty {
+                    if let url = schedule.buy_ticket_url, !url.isEmpty {
                         Button(action: {
                             
                         }, label: {
